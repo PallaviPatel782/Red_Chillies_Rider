@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../Routing/RootNavigator';
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import CustomButton from '../Components/CustomButton';
 import Header from '../Components/Header';
 import GlobalStyles from '../utils/GlobalStyles/GlobalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import KeyboardAvoidWrapper from '../Components/KeyboardAvoidWrapper'; 
+import KeyboardAvoidWrapper from '../Components/KeyboardAvoidWrapper';
+import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
+import { SH } from '../utils/Responsiveness/Dimensions';
 
-type SplashScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Splash'
->;
-
-type Props = {
-  navigation: SplashScreenNavigationProp;
-};
-
-const SplashScreen: React.FC<Props> = ({ navigation }) => {
+const SplashScreen = ({ navigation }: any) => {
   const [contact, setContact] = useState('');
+  const [countryCode, setCountryCode] = useState<CountryCode>('IN');
+  const [callingCode, setCallingCode] = useState<string>('91');
+  const [visible, setVisible] = useState(false);
+
+  const onSelect = (country: Country) => {
+    setCountryCode(country.cca2);
+    setCallingCode(country.callingCode[0]);
+  };
 
   return (
     <KeyboardAvoidWrapper>
@@ -53,22 +52,54 @@ const SplashScreen: React.FC<Props> = ({ navigation }) => {
             Sign-up to deliver orders with Red Chillies Rider
           </Text>
 
-          <View style={GlobalStyles.textInputContainer}>
+          <View
+            style={[
+              GlobalStyles.textInputContainer,
+              { flexDirection: 'row', alignItems: 'center' },
+            ]}
+          >
+            <TouchableOpacity
+              onPress={() => setVisible(true)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginRight: 8,
+              }}
+            >
+              <CountryPicker
+                {...{
+                  countryCode,
+                  withFilter: true,
+                  withFlag: true,
+                  withCallingCodeButton: false,
+                  withCallingCode: true,
+                  withEmoji: true,
+                  onSelect,
+                  visible,
+                  onClose: () => setVisible(false),
+                }}
+              />
+              <Text style={{ fontSize: 16, color: '#000' }}>+{callingCode}</Text>
+            </TouchableOpacity>
+
             <TextInput
-              style={GlobalStyles.textInput}
-              placeholder="+91 9999999999"
+              style={[GlobalStyles.textInput, { flex: 1 }]}
+              placeholder="9999999999"
               placeholderTextColor="#999"
               keyboardType="phone-pad"
               value={contact}
               onChangeText={setContact}
               returnKeyType="done"
+              maxLength={10}
             />
           </View>
 
-          <CustomButton
-            title="Continue"
-            onPress={() => navigation.replace('OtpVerification')}
-          />
+          <View style={{ marginTop: SH(15) }}>
+            <CustomButton
+              title="Continue"
+              onPress={() => navigation.navigate('OtpVerification')}
+            />
+          </View>
         </View>
       </View>
     </KeyboardAvoidWrapper>

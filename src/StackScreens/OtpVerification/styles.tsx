@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     marginTop: SH(40),
-    marginHorizontal:SW(10),
   },
   title: {
     fontSize: SF(20),

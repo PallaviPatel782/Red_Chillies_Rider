@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import Header from '../../Components/Header';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
@@ -11,6 +11,7 @@ import { SH } from '../../utils/Responsiveness/Dimensions';
 import Colors from '../../utils/Colors/Colors';
 import { showMessage } from 'react-native-flash-message';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import styles from './styles';
 
 interface Document {
     name: string;
@@ -23,6 +24,7 @@ const RiderData = () => {
     const navigation = useNavigation<any>();
     const route = useRoute<any>();
 
+    const [fullName, setFullName] = useState('');
     const [workCity, setWorkCity] = useState('');
     const [workArea, setWorkArea] = useState('');
     const [vehicle, setVehicle] = useState('');
@@ -71,15 +73,31 @@ const RiderData = () => {
             bottomComponent={
                 <CustomButton
                     title="Continue"
-                    onPress={() => console.log({ workCity, workArea, vehicle, idDocument, drivingLicense })}
+                    onPress={() => {
+                        navigation.navigate('BankDetials');
+                    }}
                 />
             }
         >
-            <Header title="Rider Details" />
 
             <View style={GlobalStyles.container}>
+                <Header title="Rider Details" />
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>Please select your work city <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        User Full Name <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
+                    <TextInput
+                        style={GlobalStyles.textInput}
+                        placeholder="Enter your full name"
+                        placeholderTextColor={Colors.gray}
+                        value={fullName}
+                        onChangeText={setFullName}
+                    />
+                </View>
+                <View style={GlobalStyles.textInputContainer}>
+                    <Text style={GlobalStyles.inputLabel}>
+                        Please select your work city <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TouchableOpacity
                         style={GlobalStyles.textInput}
                         onPress={() =>
@@ -91,10 +109,10 @@ const RiderData = () => {
                         <Text>{workCity || 'Select City'}</Text>
                     </TouchableOpacity>
                 </View>
-
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>Please select your work area <FontAwesome name="asterisk" color="red" size={8} /></Text>
-
+                    <Text style={GlobalStyles.inputLabel}>
+                        Please select your work area <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TouchableOpacity
                         style={GlobalStyles.textInput}
                         onPress={() =>
@@ -107,11 +125,10 @@ const RiderData = () => {
                         <Text>{workArea || 'Select Area'}</Text>
                     </TouchableOpacity>
                 </View>
-
-
-
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={[GlobalStyles.inputLabel]}>Choose Vehicle <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        Choose Vehicle <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <Dropdown
                         style={GlobalStyles.textInput}
                         data={vehicleOptions}
@@ -120,12 +137,13 @@ const RiderData = () => {
                         placeholder="Select Vehicle"
                         value={vehicle}
                         onChange={item => setVehicle(item.value)}
+                        selectedTextStyle={styles.selectedTextStyle}
                     />
-
                 </View>
-
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={[GlobalStyles.inputLabel]}>ID / Address Proof <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        ID / Address Proof <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TouchableOpacity
                         style={[GlobalStyles.textInput, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}
                         onPress={() => pickDocumentFile(setIdDocument)}
@@ -133,11 +151,11 @@ const RiderData = () => {
                         <Text>{idDocument?.name ?? 'Upload Document'}</Text>
                         <FontAwesome name="camera" size={20} color={Colors.gray} />
                     </TouchableOpacity>
-
                 </View>
-
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={[GlobalStyles.inputLabel]}>Driving License <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        Driving License <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TouchableOpacity
                         style={[GlobalStyles.textInput, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}
                         onPress={() => pickDocumentFile(setDrivingLicense)}

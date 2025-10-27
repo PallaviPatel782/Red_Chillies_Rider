@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, BackHandler } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,21 +13,26 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ title, showBack = true, onBackPress }) => {
   const navigation = useNavigation<any>();
-
-  const handleBack = () => {
+  const handleBackPress = () => {
     if (onBackPress) {
       onBackPress();
     } else if (navigation.canGoBack()) {
-      navigation.goBack();
+      navigation.goBack(); 
     } else {
-      BackHandler.exitApp();
+      BackHandler.exitApp(); 
     }
+    return true;
   };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <View style={styles.container}>
       {showBack ? (
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
           <Ionicons name="arrow-back" size={SF(25)} color={Colors.black} />
         </TouchableOpacity>
       ) : (
@@ -46,14 +51,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: SW(15),
+    paddingHorizontal:0,
     backgroundColor: '#fff',
   },
   backButton: {
     padding: SW(5),
-    borderWidth:0.5,
-    borderColor:Colors.lightGray,
-    borderRadius:"50%"
+    borderWidth: 0.5,
+    borderColor: Colors.lightGray,
+    borderRadius: SW(25),
   },
   placeholder: {
     width: SW(25),

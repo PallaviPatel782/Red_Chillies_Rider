@@ -15,14 +15,12 @@ import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import Icon from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-// Updated Work Areas list
 const allWorkAreas = [
   'Al Dhahab',
   'Al-Hanish',
   'Al Muftaha Village',
   'Al-Nusab (or Al-Nasb)',
   'Al-Qura',
-  // Add more work areas here
 ];
 
 const SearchWorkArea = ({ navigation, route }: any) => {
@@ -41,8 +39,8 @@ const SearchWorkArea = ({ navigation, route }: any) => {
 
   return (
     <KeyboardAvoidWrapper>
-      <Header title=" " showBack />
       <View style={styles.container}>
+        <Header title=" " showBack />
         <View style={styles.searchContainer}>
           <Icon name="search" size={20} color={Colors.gray} style={styles.searchIcon} />
           <TextInput

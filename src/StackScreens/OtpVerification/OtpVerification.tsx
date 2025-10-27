@@ -10,6 +10,7 @@ import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../utils/Colors/Colors';
 import { SH } from '../../utils/Responsiveness/Dimensions';
+import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 
 const OtpVerification: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -42,7 +43,7 @@ const OtpVerification: React.FC = () => {
   const handleSubmit = () => {
     const code = otp.join('');
     console.log('OTP Entered:', code);
-    navigation.replace('RiderData');
+    navigation.navigate('RiderData');
   };
 
   return (
@@ -51,45 +52,47 @@ const OtpVerification: React.FC = () => {
         <CustomButton title="Continue" onPress={handleSubmit} />
       }
     >
-      <Header title="" />
-      <View style={styles.content}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={styles.title}>Verification Code</Text>
-          <FontAwesome
-            name="check-circle"
-            color={Colors.green}
-            size={24}
-            style={{ marginLeft: 8 }}
-          />
-        </View>
-
-        <Text style={styles.subtitle}>
-          We have sent the verification code to your mobile number.
-        </Text>
-
-        <View style={styles.otpContainer}>
-          {otp.map((value, index) => (
-            <TextInput
-              key={index}
-              ref={(el) => { refs.current[index] = el; }}
-              value={value}
-              onChangeText={(text) => handleChange(index, text)}
-              keyboardType="number-pad"
-              maxLength={1}
-              style={[
-                styles.otpBox,
-                { borderColor: activeIndex === index ? Colors.green : styles.otpBox.borderColor },
-              ]}
-              textAlign="center"
-              onFocus={() => setActiveIndex(index)}
-              onBlur={() => setActiveIndex(null)}
+      <View style={GlobalStyles.container}>
+        <Header title="" />
+        <View style={styles.content}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.title}>Verification Code</Text>
+            <FontAwesome
+              name="check-circle"
+              color={Colors.green}
+              size={24}
+              style={{ marginLeft: 8 }}
             />
-          ))}
-        </View>
+          </View>
 
-        <Text style={{ color: Colors.gray, marginTop: SH(20) }}>
-          Didn’t get the OTP? Resend SMS in 0:{timer < 10 ? `0${timer}` : timer}
-        </Text>
+          <Text style={styles.subtitle}>
+            We have sent the verification code to your mobile number.
+          </Text>
+
+          <View style={styles.otpContainer}>
+            {otp.map((value, index) => (
+              <TextInput
+                key={index}
+                ref={(el) => { refs.current[index] = el; }}
+                value={value}
+                onChangeText={(text) => handleChange(index, text)}
+                keyboardType="number-pad"
+                maxLength={1}
+                style={[
+                  styles.otpBox,
+                  { borderColor: activeIndex === index ? Colors.green : styles.otpBox.borderColor },
+                ]}
+                textAlign="center"
+                onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
+              />
+            ))}
+          </View>
+
+          <Text style={{ color: Colors.gray, marginTop: SH(20) }}>
+            Didn’t get the OTP? Resend SMS in 0:{timer < 10 ? `0${timer}` : timer}
+          </Text>
+        </View>
       </View>
     </KeyboardAvoidWrapper>
   );

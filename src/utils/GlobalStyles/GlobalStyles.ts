@@ -6,12 +6,12 @@ const GlobalStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingHorizontal: SW(10),
-    paddingTop: SH(30),
+    paddingHorizontal: SW(15),
+    paddingTop: SH(10),
   },
   textInputContainer: {
     width: '100%',
-    marginVertical: SH(10),
+    marginVertical: SH(7),
   },
   textInput: {
     borderWidth: 1,

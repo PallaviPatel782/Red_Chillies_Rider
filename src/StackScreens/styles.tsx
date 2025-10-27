@@ -12,15 +12,15 @@ const styles = StyleSheet.create({
         fontSize: SF(20),
         fontFamily: 'Ubuntu-Medium',
         color: Colors.black,
-        marginBottom: SH(10),
     },
     subtitle: {
         fontSize: SF(15),
         color: Colors.gray,
         textAlign: 'center',
+        marginBottom:SH(10)
     },
     middleContainer:{
-        paddingTop:SH(100)
+        paddingTop:SH(80)
     }
 });
 
