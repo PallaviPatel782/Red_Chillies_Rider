@@ -9,7 +9,7 @@ import CustomButton from '../../Components/CustomButton';
 import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../utils/Colors/Colors';
-import { SH } from '../../utils/Responsiveness/Dimensions';
+import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 
 const OtpVerification: React.FC = () => {
@@ -60,8 +60,8 @@ const OtpVerification: React.FC = () => {
             <FontAwesome
               name="check-circle"
               color={Colors.green}
-              size={24}
-              style={{ marginLeft: 8 }}
+              size={25}
+              style={{ marginLeft: SW(8), marginBottom: SH(10) }}
             />
           </View>
 
@@ -89,7 +89,7 @@ const OtpVerification: React.FC = () => {
             ))}
           </View>
 
-          <Text style={{ color: Colors.gray, marginTop: SH(20) }}>
+          <Text style={{ color: Colors.gray, marginTop: SH(20), fontSize: SF(13) }}>
             Didn’t get the OTP? Resend SMS in 0:{timer < 10 ? `0${timer}` : timer}
           </Text>
         </View>

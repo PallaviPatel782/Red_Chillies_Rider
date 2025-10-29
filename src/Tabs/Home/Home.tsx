@@ -1,26 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View } from 'react-native';
+import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
+import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
+import StatusShiftModal from '../../Components/StatusShiftModal';
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
-    </View>
-  )
-}
+    <KeyboardAvoidWrapper>
+      <View style={GlobalStyles.container}>
+        <StatusShiftModal />
+      </View>
+    </KeyboardAvoidWrapper>
+  );
+};
 
-export default Home
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: 'Ubuntu-Medium',
-    color: '#000',
-  },
-})
+export default Home;

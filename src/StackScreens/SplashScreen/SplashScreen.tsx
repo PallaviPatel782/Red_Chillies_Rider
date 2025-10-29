@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import CustomButton from '../Components/CustomButton';
-import Header from '../Components/Header';
-import GlobalStyles from '../utils/GlobalStyles/GlobalStyles';
+import CustomButton from '../../Components/CustomButton';
+import Header from '../../Components/Header';
+import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import KeyboardAvoidWrapper from '../Components/KeyboardAvoidWrapper';
+import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
-import { SH } from '../utils/Responsiveness/Dimensions';
+import { SH } from '../../utils/Responsiveness/Dimensions';
 
 const SplashScreen = ({ navigation }: any) => {
   const [contact, setContact] = useState('');
@@ -26,7 +26,7 @@ const SplashScreen = ({ navigation }: any) => {
         <Header title=" " />
         <View style={styles.middleContainer}>
           <Image
-            source={require('../assests/Images/SplashImage.png')}
+            source={require('../../assests/Images/SplashImage.png')}
             style={styles.image}
             resizeMode="contain"
           />

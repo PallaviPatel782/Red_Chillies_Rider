@@ -7,7 +7,7 @@ import CustomButton from '../../Components/CustomButton';
 import { pick, types } from '@react-native-documents/picker';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { SH } from '../../utils/Responsiveness/Dimensions';
+import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import Colors from '../../utils/Colors/Colors';
 import { showMessage } from 'react-native-flash-message';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -106,7 +106,7 @@ const RiderData = () => {
                             })
                         }
                     >
-                        <Text>{workCity || 'Select City'}</Text>
+                        <Text style={{ color: Colors.gray }}>{workCity || 'Select City'}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
@@ -122,7 +122,7 @@ const RiderData = () => {
                             })
                         }
                     >
-                        <Text>{workArea || 'Select Area'}</Text>
+                        <Text style={{ color: Colors.gray }}>{workArea || 'Select Area'}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
@@ -135,9 +135,10 @@ const RiderData = () => {
                         labelField="label"
                         valueField="value"
                         placeholder="Select Vehicle"
+                        selectedTextStyle={styles.selectedTextStyle}
+                        placeholderStyle={styles.placeholderStyle}
                         value={vehicle}
                         onChange={item => setVehicle(item.value)}
-                        selectedTextStyle={styles.selectedTextStyle}
                     />
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
@@ -145,25 +146,53 @@ const RiderData = () => {
                         ID / Address Proof <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TouchableOpacity
-                        style={[GlobalStyles.textInput, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}
+                        style={[
+                            GlobalStyles.textInput,
+                            {
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                            },
+                        ]}
                         onPress={() => pickDocumentFile(setIdDocument)}
                     >
-                        <Text>{idDocument?.name ?? 'Upload Document'}</Text>
+                        <Text
+                            style={{ color: Colors.gray, flex: 1, marginRight: SW(10) }}
+                            numberOfLines={1}
+                            ellipsizeMode="tail"
+                        >
+                            {idDocument?.name ?? 'Upload Document'}
+                        </Text>
                         <FontAwesome name="camera" size={20} color={Colors.gray} />
                     </TouchableOpacity>
                 </View>
+
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
                         Driving License <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TouchableOpacity
-                        style={[GlobalStyles.textInput, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}
+                        style={[
+                            GlobalStyles.textInput,
+                            {
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                            },
+                        ]}
                         onPress={() => pickDocumentFile(setDrivingLicense)}
                     >
-                        <Text>{drivingLicense?.name ?? 'Upload Document'}</Text>
+                        <Text
+                            style={{ color: Colors.gray, flex: 1, marginRight: SW(10) }}
+                            numberOfLines={1}
+                            ellipsizeMode="tail"
+                        >
+                            {drivingLicense?.name ?? 'Upload Document'}
+                        </Text>
                         <FontAwesome name="camera" size={20} color={Colors.gray} />
                     </TouchableOpacity>
                 </View>
+
             </View>
         </KeyboardAvoidWrapper>
     );

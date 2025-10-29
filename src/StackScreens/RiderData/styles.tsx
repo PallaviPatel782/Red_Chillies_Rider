@@ -8,4 +8,10 @@ export default StyleSheet.create({
     color: Colors.black,
     fontFamily: 'Ubuntu-Regular',
   },
+
+  placeholderStyle: {
+    fontSize: SF(14),
+    color: Colors.gray,
+    fontFamily: 'Ubuntu-Regular',
+  },
 });

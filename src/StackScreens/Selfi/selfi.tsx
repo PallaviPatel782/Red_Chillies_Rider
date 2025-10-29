@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, PermissionsAndroid, Platform } from 'react-native';
+import { View, Text, Image, PermissionsAndroid, Platform, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Header from '../../Components/Header';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
@@ -9,6 +9,7 @@ import styles from './styles';
 import { SH, SW } from '../../utils/Responsiveness/Dimensions';
 import Colors from '../../utils/Colors/Colors';
 import { showMessage } from 'react-native-flash-message';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Selfi = ({ navigation }: any) => {
   const [photo, setPhoto] = useState<string | null>(null);
@@ -74,10 +75,18 @@ const Selfi = ({ navigation }: any) => {
         ) : (
           <View style={styles.bottomButtonsContainer}>
             <View style={styles.buttonHalf}>
-              <CustomButton title="Retake" onPress={handleTakeSelfie} />
+              <TouchableOpacity
+                onPress={handleTakeSelfie}
+              >
+                <Text style={styles.RetakeButton}><FontAwesome name="camera" size={18} color={Colors.red}/> Retake</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.buttonHalf}>
-              <CustomButton title="Submit" onPress={handleSubmit} />
+               <TouchableOpacity
+                onPress={handleSubmit}
+              >
+                <Text style={styles.SubmitButton}>Submit</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )
@@ -85,7 +94,7 @@ const Selfi = ({ navigation }: any) => {
     >
 
       <View style={[GlobalStyles.container]}>
-         <Header title="Take Selfie" />
+        <Header title="Take Selfie" />
         <Text style={styles.guidelineTitle}>Selfie Guidelines</Text>
 
         <View style={styles.row}>

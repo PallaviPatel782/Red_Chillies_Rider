@@ -61,6 +61,7 @@ const ChangeBankAccount = ({ navigation }: any) => {
                         style={GlobalStyles.textInput}
                         placeholder="Enter account number"
                         keyboardType="numeric"
+                        placeholderTextColor={Colors.gray}
                         value={accountNumber}
                         onChangeText={setAccountNumber}
                     />
@@ -72,6 +73,7 @@ const ChangeBankAccount = ({ navigation }: any) => {
                     <TextInput
                         style={GlobalStyles.textInput}
                         placeholder="Confirm account number"
+                          placeholderTextColor={Colors.gray}
                         keyboardType="numeric"
                         value={confirmAccountNumber}
                         onChangeText={setConfirmAccountNumber}
@@ -85,6 +87,7 @@ const ChangeBankAccount = ({ navigation }: any) => {
                         style={GlobalStyles.textInput}
                         placeholder="IFSC Code"
                         autoCapitalize="characters"
+                          placeholderTextColor={Colors.gray}
                         value={ifscCode}
                         onChangeText={setIfscCode}
                     />

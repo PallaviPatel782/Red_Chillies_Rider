@@ -52,6 +52,7 @@ const ReportIssue = () => {
                         valueField="value"
                         placeholder="Select an option"
                         selectedTextStyle={styles.selectedTextStyle}
+                        placeholderStyle={styles.placeholderStyle}
                         value={selectedOption}
                         onChange={item => setSelectedOption(item.value)}
                     />
@@ -110,6 +111,12 @@ const styles = StyleSheet.create({
     selectedTextStyle: {
         fontSize: SF(14),
         color: Colors.black,
+        fontFamily: 'Ubuntu-Regular',
+    },
+
+    placeholderStyle: {
+        fontSize: SF(14),
+        color: Colors.gray,
         fontFamily: 'Ubuntu-Regular',
     },
 });

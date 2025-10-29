@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import SplashScreen from '../StackScreens/SplashScreen';
+import SplashScreen from '../StackScreens/SplashScreen/SplashScreen';
 import Home from '../Tabs/Home/Home';
 import Pocket from '../Tabs/Pocket/Pocket';
 import Profile from '../Tabs/Profile/Profile';
@@ -24,6 +24,11 @@ import SendFeedBack from '../StackScreens/FeedBack/SendFeedBack';
 import ReportIssue from '../StackScreens/ReportIssue/ReportIssue';
 import YourProfile from '../StackScreens/YourProfile/YourProfile';
 import HelpCenter from '../StackScreens/HelpCenter/HelpCenter';
+import HelpCenterDenyOrder from '../StackScreens/HelpCenter/HelpCenterDenyOrder/HelpCenterDenyOrder'
+import CannotDeliverHelpCenter from '../StackScreens/HelpCenter/CannotDeliverHelpCenter/CannotDeliverHelpCenter';
+import WithdrawScreen from '../StackScreens/Withdraw/WithdrawScreen';
+import WithdrawSucessfully from '../StackScreens/WithdrawSucessfully/WithdrawSucessfully';
+import PocketStatement from '../StackScreens/PocketStatement/PocketStatement';
 
 export type RootStackParamList = {
     Splash: undefined;
@@ -40,7 +45,12 @@ export type RootStackParamList = {
     SendFeedBack: undefined;
     ReportIssue: undefined;
     YourProfile: undefined;
-    HelpCenter: undefined
+    HelpCenter: undefined;
+    HelpCenterDenyOrder: undefined;
+    CannotDeliverHelpCenter: undefined;
+    WithdrawScreen: undefined;
+    WithdrawSucessfully: undefined;
+    PocketStatement: undefined
 };
 
 export type RootTabParamList = {
@@ -135,6 +145,11 @@ const RootNavigator: React.FC = () => {
                 <Stack.Screen name="SendFeedBack" component={SendFeedBack} />
                 <Stack.Screen name="ReportIssue" component={ReportIssue} />
                 <Stack.Screen name="HelpCenter" component={HelpCenter} />
+                <Stack.Screen name="HelpCenterDenyOrder" component={HelpCenterDenyOrder} />
+                <Stack.Screen name="CannotDeliverHelpCenter" component={CannotDeliverHelpCenter} />
+                <Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
+                <Stack.Screen name="WithdrawSucessfully" component={WithdrawSucessfully} />
+                <Stack.Screen name="PocketStatement" component={PocketStatement} />
                 <Stack.Screen name="YourProfile" component={YourProfile} />
                 <Stack.Screen name="MainTabs" component={MainTabs} />
             </Stack.Navigator>

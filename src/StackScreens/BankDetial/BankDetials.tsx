@@ -63,6 +63,7 @@ const BankDetials = ({ navigation }: any) => {
                         placeholder="Enter account number"
                         keyboardType="numeric"
                         value={accountNumber}
+                        placeholderTextColor={Colors.gray}
                         onChangeText={setAccountNumber}
                     />
                 </View>
@@ -75,6 +76,7 @@ const BankDetials = ({ navigation }: any) => {
                         placeholder="Confirm account number"
                         keyboardType="numeric"
                         value={confirmAccountNumber}
+                        placeholderTextColor={Colors.gray}
                         onChangeText={setConfirmAccountNumber}
                     />
                 </View>
@@ -86,6 +88,7 @@ const BankDetials = ({ navigation }: any) => {
                         style={GlobalStyles.textInput}
                         placeholder="IFSC Code"
                         autoCapitalize="characters"
+                        placeholderTextColor={Colors.gray}
                         value={ifscCode}
                         onChangeText={setIfscCode}
                     />

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     marginBottom: SH(10),
   },
   subtitle: {
-    fontSize: SF(12),
+    fontSize: SF(14),
     color: Colors.gray,
     textAlign: 'center',
     marginBottom: SH(30),

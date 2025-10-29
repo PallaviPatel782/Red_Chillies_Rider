@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../utils/Colors/Colors';
-import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
+import Colors from '../../../utils/Colors/Colors';
+import { SF, SH, SW } from '../../../utils/Responsiveness/Dimensions';
 
 export default StyleSheet.create({
     innerContainer: {
@@ -45,6 +45,6 @@ export default StyleSheet.create({
         height: 1,
         backgroundColor: Colors.gray,
         opacity: 0.3,
-        marginHorizontal: -SW(20)
+        marginHorizontal:-SW(20)
     },
 });

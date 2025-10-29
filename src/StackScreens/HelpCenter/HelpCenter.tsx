@@ -6,7 +6,7 @@ import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import styles from './styles';
 
-const HelpCenter = () => {
+const HelpCenter = ({ navigation }: any) => {
     return (
         <KeyboardAvoidWrapper>
             <View style={GlobalStyles.container}>
@@ -17,22 +17,43 @@ const HelpCenter = () => {
                         <View style={styles.redLine} />
                         <Text style={styles.titleText}>Help Center</Text>
                     </View>
-                    <TouchableOpacity style={styles.listItem}>
+                    <TouchableOpacity
+                        style={styles.listItem}
+                        onPress={() => navigation.navigate('CannotDeliverHelpCenter')}
+                    >
                         <Text style={styles.listText}>Cannot Deliver</Text>
                         <Icon name="chevron-forward" size={20} color="#999" />
                     </TouchableOpacity>
 
                     <View style={styles.divider} />
 
-                    <TouchableOpacity style={styles.listItem}>
+                    <TouchableOpacity
+                        style={styles.listItem}
+                        onPress={() =>
+                            navigation.navigate('HelpCenterDenyOrder', {
+                                selectedReason: 'Cannot Deliver : Restaurant is closed',
+                            })
+                        }
+                    >
                         <Text style={styles.listText}>Restaurant is closed</Text>
                         <Icon name="chevron-forward" size={20} color="#999" />
                     </TouchableOpacity>
+
                     <View style={styles.divider} />
-                    <TouchableOpacity style={styles.listItem}>
+
+                    <TouchableOpacity
+                        style={styles.listItem}
+                        onPress={() =>
+                            navigation.navigate('HelpCenterDenyOrder', {
+                                selectedReason: 'Cannot Deliver : Can’t find restaurant',
+                            })
+                        }
+                    >
                         <Text style={styles.listText}>Can’t find restaurant</Text>
                         <Icon name="chevron-forward" size={20} color="#999" />
                     </TouchableOpacity>
+
+                    <View style={styles.divider} />
                 </View>
             </View>
         </KeyboardAvoidWrapper>
