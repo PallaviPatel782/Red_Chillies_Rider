@@ -7,5 +7,6 @@ declare module 'react-native-vector-icons/*' {
     size?: number;
     color?: string;
   }
+
   export default class Icon extends React.Component<IconProps> {}
 }

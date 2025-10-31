@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -6,21 +6,44 @@ import {
     Modal,
     StyleSheet,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../utils/Colors/Colors';
 import { SH, SW, SF } from '../utils/Responsiveness/Dimensions';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setStatus, setShift } from '../redux/slices/statusShiftStore';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../Routing/RootNavigator';
+import { useNavigation } from '@react-navigation/native';
 
-const StatusShiftModal: React.FC = () => {
-    const navigation = useNavigation<any>();
+type ShiftType = { label: string; time: string };
+
+type Props = {
+    onStatusChange?: (status: 'Online' | 'On break' | 'Offline') => void;
+    onShiftSelect?: (shift: ShiftType) => void;
+};
+
+const StatusShiftModal: React.FC<Props> = ({ onStatusChange, onShiftSelect }) => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const [visible, setVisible] = useState(false);
     const [shiftModalVisible, setShiftModalVisible] = useState(false);
-    const [status, setStatus] = useState<'Online' | 'On break' | 'Offline'>('Offline');
-    const [shift, setShift] = useState<string>('');
+    const dispatch = useDispatch();
+    const { status, shift } = useSelector((state: RootState) => state.status);
+
+    const shifts: ShiftType[] = [
+        { label: 'Morning', time: '7 AM – 3 PM' },
+        { label: 'Evening', time: '3 PM – 11 PM' },
+        { label: 'Night', time: '11 PM – 7 AM' },
+    ];
+
+    useEffect(() => {
+        onStatusChange?.('Online');
+        onShiftSelect?.({ label: 'Morning', time: '7 AM – 3 PM' });
+    }, []);
 
     const handleStatusPress = (newStatus: 'Online' | 'On break' | 'Offline') => {
-        setStatus(newStatus);
+        dispatch(setStatus(newStatus));
         if (newStatus === 'Online') {
             setShiftModalVisible(true);
         } else {
@@ -28,8 +51,9 @@ const StatusShiftModal: React.FC = () => {
         }
     };
 
-    const handleApplyShift = (selectedShift: string) => {
-        setShift(selectedShift);
+    const handleApplyShift = (selectedShift: string | null) => {
+        if (!selectedShift) return;
+        dispatch(setShift(selectedShift));
         setShiftModalVisible(false);
         setVisible(false);
     };
@@ -71,14 +95,11 @@ const StatusShiftModal: React.FC = () => {
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('HelpCenter')}
-                    style={styles.infoIconOutside}>
+
+                <TouchableOpacity style={styles.infoIconOutside} onPress={() => navigation.navigate('HelpCenter')}>
                     <Icon name="help-circle-outline" size={20} color="#666" />
                 </TouchableOpacity>
             </View>
-
-
             <Modal
                 visible={visible && !shiftModalVisible}
                 transparent
@@ -94,6 +115,7 @@ const StatusShiftModal: React.FC = () => {
                             </TouchableOpacity>
                         </View>
 
+                        <Text style={styles.modalTitle}>Set your status</Text>
 
                         <View style={styles.statusRow}>
                             {['Offline', 'Online', 'On break'].map((item) => (
@@ -101,12 +123,7 @@ const StatusShiftModal: React.FC = () => {
                                     key={item}
                                     style={[
                                         styles.statusBtn,
-                                        item === 'Offline'
-                                            ? styles.offlineBtn
-                                            : item === 'Online'
-                                                ? styles.onlineBtn
-                                                : styles.breakBtn,
-                                        status === item && styles.selected,
+                                        status === item && { backgroundColor: '#f5f5f5' },
                                     ]}
                                     onPress={() =>
                                         handleStatusPress(item as 'Online' | 'On break' | 'Offline')
@@ -131,7 +148,6 @@ const StatusShiftModal: React.FC = () => {
                     </View>
                 </View>
             </Modal>
-
             <Modal
                 visible={shiftModalVisible}
                 transparent
@@ -139,12 +155,7 @@ const StatusShiftModal: React.FC = () => {
                 onRequestClose={() => setShiftModalVisible(false)}>
                 <View style={styles.bottomOverlay}>
                     <View style={styles.bottomSheet}>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                paddingVertical: SH(10),
-                            }}>
+                        <View style={styles.headerRow}>
                             <Text style={[styles.title, { color: '#26662F' }]}>
                                 Select your shift
                             </Text>
@@ -152,18 +163,15 @@ const StatusShiftModal: React.FC = () => {
                                 <AntDesign name="close" size={20} color="#000" />
                             </TouchableOpacity>
                         </View>
-                        {[
-                            { label: 'Morning', time: '7 AM – 3 PM' },
-                            { label: 'Evening', time: '3 PM – 11 PM' },
-                            { label: 'Night', time: '11 PM – 7 AM' },
-                        ].map((item) => (
+
+                        {shifts.map((item) => (
                             <TouchableOpacity
                                 key={item.label}
                                 style={[
                                     styles.shiftOption,
                                     shift === item.label && styles.selectedShift,
                                 ]}
-                                onPress={() => handleApplyShift(item.label)}>
+                                onPress={() => dispatch(setShift(item.label))}>
                                 <Text
                                     style={[
                                         styles.shiftLabel,
@@ -180,9 +188,10 @@ const StatusShiftModal: React.FC = () => {
                                 </Text>
                             </TouchableOpacity>
                         ))}
+
                         <TouchableOpacity
                             style={styles.applyButton}
-                            onPress={() => setShiftModalVisible(false)}>
+                            onPress={() => handleApplyShift(shift)}>
                             <Text style={styles.applyText}>Apply</Text>
                         </TouchableOpacity>
                     </View>
@@ -198,10 +207,9 @@ const styles = StyleSheet.create({
     statusWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginTop: SH(10),
-        justifyContent: "space-between"
     },
-
     statusContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -210,112 +218,23 @@ const styles = StyleSheet.create({
         paddingHorizontal: SW(18),
         borderWidth: 1.5,
     },
-
-    statusLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    statusOnline: {
-        borderColor: '#00B56A',
-        backgroundColor: 'rgba(0, 181, 106, 0.1)',
-    },
-
-    statusOffline: {
-        borderColor: '#FF4D4D',
-        backgroundColor: 'rgba(255, 77, 77, 0.1)',
-    },
-
-    statusBreak: {
-        borderColor: 'orange',
-        backgroundColor: 'rgba(255, 165, 0, 0.1)',
-    },
-
+    statusLeft: { flexDirection: 'row', alignItems: 'center' },
+    statusOnline: { borderColor: '#00B56A', backgroundColor: 'rgba(0,181,106,0.1)' },
+    statusOffline: { borderColor: '#FF4D4D', backgroundColor: 'rgba(255,77,77,0.1)' },
+    statusBreak: { borderColor: 'orange', backgroundColor: 'rgba(255,165,0,0.1)' },
     statusIndicator: {
         width: SW(10),
         height: SH(10),
         borderRadius: 5,
         marginRight: SW(6),
     },
-
-    statusLabel: {
-        fontSize: SF(14),
-        fontFamily: 'Ubuntu-Medium',
-    },
-
+    statusLabel: { fontSize: SF(14), fontFamily: 'Ubuntu-Medium' },
     infoIconOutside: {
-        marginLeft: SW(10),
         backgroundColor: '#f2f2f2',
         borderRadius: SW(20),
         padding: SW(6),
         justifyContent: 'center',
         alignItems: 'center',
-    },
-
-    overlay: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.3)',
-    },
-    content: {
-        backgroundColor: '#fff',
-        width: '85%',
-        borderRadius: 14,
-        paddingHorizontal: SW(20),
-        paddingVertical: SH(20)
-    },
-    headerRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: SF(16),
-        fontFamily: 'Ubuntu-Medium',
-        color: '#000',
-    },
-    statusRow: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        marginBottom: SH(10),
-    },
-    statusBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: SH(8),
-        paddingHorizontal: SW(25),
-    },
-    offlineBtn: {
-        borderColor: Colors.red,
-    },
-    onlineBtn: {
-        borderColor: Colors.green,
-    },
-    breakBtn: {
-        borderColor: '#FFD712',
-    },
-    selected: {
-        opacity: 0.6,
-    },
-    statusDotSmall: {
-        width: SW(15),
-        height: SH(15),
-        borderRadius: 10,
-        marginRight: 6,
-    },
-    statusTextModal: {
-        fontSize: SF(15),
-        color: '#000',
-        fontFamily: 'Ubuntu-Regular',
-    },
-    closeBtn: {
-        alignSelf: 'flex-end',
-        marginTop: SH(15),
-    },
-    closeText: {
-        color: '#ff4d4d',
-        fontFamily: 'Ubuntu-Regular',
     },
     bottomOverlay: {
         flex: 1,
@@ -327,39 +246,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         paddingHorizontal: SW(20),
-        paddingVertical: SH(20)
-    },
-    shiftOption: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        paddingHorizontal: SW(10),
-        paddingVertical: SH(10),
-        marginBottom: 10,
-    },
-    selectedShift: {
-        borderColor: Colors.red,
-        backgroundColor: '#ffecec',
-    },
-    shiftLabel: {
-        fontSize: SF(14),
-        fontFamily: 'Ubuntu-Regular',
-    },
-    shiftTime: {
-        fontSize: SF(12),
-        color: '#555',
-        fontFamily: 'Ubuntu-Regular',
-    },
-    applyButton: {
-        backgroundColor: '#ffecec',
-        borderRadius: 20,
-        paddingVertical: SH(10),
-        marginTop: SH(10),
-    },
-    applyText: {
-        textAlign: 'center',
-        color: Colors.red,
-        fontFamily: 'Ubuntu-Medium',
+        paddingVertical: SH(20),
     },
     closeIconWrapper: {
         alignItems: 'center',
@@ -369,7 +256,6 @@ const styles = StyleSheet.create({
         right: 0,
         zIndex: 10,
     },
-
     closeCircle: {
         width: SW(35),
         height: SW(35),
@@ -378,10 +264,59 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
     },
-
+    modalTitle: {
+        textAlign: 'center',
+        fontSize: SF(16),
+        fontFamily: 'Ubuntu-Medium',
+        marginBottom: SH(15),
+        marginTop: SH(10),
+    },
+    statusRow: { flexDirection: 'column', gap: SH(10) },
+    statusBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: SH(10),
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 10,
+        paddingHorizontal: SW(15),
+    },
+    statusDotSmall: {
+        width: SW(14),
+        height: SH(14),
+        borderRadius: 7,
+        marginRight: SW(8),
+    },
+    statusTextModal: { fontSize: SF(15), color: '#000', fontFamily: 'Ubuntu-Regular' },
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: SH(10),
+    },
+    title: { fontSize: SF(16), fontFamily: 'Ubuntu-Medium' },
+    shiftOption: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 8,
+        paddingHorizontal: SW(10),
+        paddingVertical: SH(10),
+        marginBottom: 10,
+    },
+    selectedShift: { borderColor: Colors.red, backgroundColor: '#ffecec' },
+    shiftLabel: { fontSize: SF(14), fontFamily: 'Ubuntu-Regular' },
+    shiftTime: { fontSize: SF(12), color: '#555', fontFamily: 'Ubuntu-Regular' },
+    applyButton: {
+        backgroundColor: Colors.red,
+        borderRadius: 20,
+        paddingVertical: SH(10),
+        marginTop: SH(10),
+    },
+    applyText: {
+        textAlign: 'center',
+        color: Colors.white,
+        fontFamily: 'Ubuntu-Medium',
+        fontSize: SF(15),
+    },
 });

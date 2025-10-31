@@ -68,7 +68,6 @@ const PocketStatement = () => {
     if (range.end) {
       marked[range.end] = { endingDay: true, color: Colors.green, textColor: '#fff' };
 
-      // highlight range between start and end
       let current = new Date(range.start!);
       const end = new Date(range.end);
       while (current < end) {
@@ -82,43 +81,38 @@ const PocketStatement = () => {
   };
 
   const formatDate = (dateStr: string) => {
-  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short' };
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-GB', options);
-};
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short' };
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-GB', options);
+  };
 
   return (
     <KeyboardAvoidWrapper>
       <View style={GlobalStyles.container}>
         <Header title="Pocket statement" />
-
-       {/* Filter Button */}
-<View style={{ alignItems: 'flex-start', marginTop: SH(15) }}>
-  <TouchableOpacity
-    style={styles.filterButton}
-    onPress={() => setShowFilterModal(true)}>
-    <Icon name="filter" size={16} color={Colors.black} />
-    <Text style={styles.filterText}> Filters ▾</Text>
-  </TouchableOpacity>
-</View>
-
-{/* Centered Date Range with Lines */}
-<View style={styles.dateRow}>
-  <View style={styles.line} />
-  <Text style={styles.dateText}>
-    {range.start && range.end
-      ? `${formatDate(range.start)} to ${formatDate(range.end)}`
-      : '12 Oct to 19 Oct'}
-  </Text>
-  <View style={styles.line} />
-</View>
+        <View style={{ alignItems: 'flex-start', marginTop: SH(15) }}>
+          <TouchableOpacity
+            style={styles.filterButton}
+            onPress={() => setShowFilterModal(true)}>
+            <Icon name="filter" size={16} color={Colors.black} />
+            <Text style={styles.filterText}> Filters ▾</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.dateRow}>
+          <View style={styles.line} />
+          <Text style={styles.dateText}>
+            {range.start && range.end
+              ? `${formatDate(range.start)} to ${formatDate(range.end)}`
+              : '12 Oct to 19 Oct'}
+          </Text>
+          <View style={styles.line} />
+        </View>
 
 
         <View style={styles.divider} />
-
-        {/* Transaction List */}
         <FlatList
           data={transactions}
+          scrollEnabled={false}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.transactionItem}>
@@ -140,38 +134,37 @@ const PocketStatement = () => {
           ItemSeparatorComponent={() => <View style={styles.itemDivider} />}
           contentContainerStyle={{ paddingTop: 10 }}
         />
-
-        {/* Filter Modal */}
         <Modal
           visible={showFilterModal}
           transparent
           animationType="fade"
           onRequestClose={() => setShowFilterModal(false)}>
           <TouchableWithoutFeedback onPress={() => setShowFilterModal(false)}>
-            <View style={styles.modalOverlay}>
+            <View style={styles.filterOverlay}>
               <TouchableWithoutFeedback>
-                <View style={styles.dropdownContainer}>
-                  {filterOptions.map((item) => (
-                    <TouchableOpacity
-                      key={item}
-                      style={styles.dropdownItem}
-                      onPress={() => {
-                        setSelectedFilter(item);
-                        setShowFilterModal(false);
-                        if (item === 'Date Range') {
-                          setShowCalendar(true);
-                        }
-                      }}>
-                      <Text style={styles.dropdownText}>{item}</Text>
-                    </TouchableOpacity>
-                  ))}
+                <View style={styles.dropdownWrapper}>
+                  <View style={styles.dropdownContainer}>
+                    {filterOptions.map((item) => (
+                      <TouchableOpacity
+                        key={item}
+                        style={styles.dropdownItem}
+                        onPress={() => {
+                          setSelectedFilter(item);
+                          setShowFilterModal(false);
+                          if (item === 'Date Range') {
+                            setShowCalendar(true);
+                          }
+                        }}>
+                        <Text style={styles.dropdownText}>{item}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
                 </View>
               </TouchableWithoutFeedback>
             </View>
           </TouchableWithoutFeedback>
         </Modal>
 
-        {/* Calendar Modal */}
         <Modal
           visible={showCalendar}
           transparent
@@ -197,6 +190,7 @@ const PocketStatement = () => {
             </View>
           </View>
         </Modal>
+
       </View>
     </KeyboardAvoidWrapper>
   );

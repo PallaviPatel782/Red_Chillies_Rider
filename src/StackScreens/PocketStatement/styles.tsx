@@ -3,6 +3,43 @@ import { SH, SW, SF } from '../../utils/Responsiveness/Dimensions';
 import Colors from '../../utils/Colors/Colors';
 
 export default StyleSheet.create({
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    filterOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.1)',
+    },
+    dropdownWrapper: {
+        position: 'absolute',
+        top: SH(122),
+        left: SW(18),
+        width: SW(160),
+    },
+
+    dropdownContainer: {
+        backgroundColor: Colors.white,
+        borderRadius: 8,
+        width: '100%',
+        paddingVertical: SH(5),
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 4,
+    },
+
+    dropdownItem: {
+        paddingVertical: SH(8),
+        paddingHorizontal: SW(10),
+    },
+    dropdownText: {
+        fontSize: SF(14),
+        color: Colors.black,
+    },
+
     filterRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -23,6 +60,30 @@ export default StyleSheet.create({
         fontSize: SF(14),
         color: Colors.black,
     },
+    filterDropdownContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        borderColor: Colors.gray,
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: SW(10),
+        paddingVertical: SH(6),
+        width: SW(160),
+    },
+    dropdown: {
+        flex: 1,
+        height: SH(30),
+    },
+    dropdownSelectedText: {
+        fontSize: SF(14),
+        color: Colors.black,
+    },
+    dropdownItemText: {
+        fontSize: SF(14),
+        color: Colors.black,
+    },
+
     dateRangeText: {
         fontSize: SF(13),
         color: Colors.gray,
@@ -75,30 +136,6 @@ export default StyleSheet.create({
         height: 1,
         backgroundColor: '#EAEAEA',
         marginVertical: SH(4),
-    },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.3)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    dropdownContainer: {
-        backgroundColor: Colors.white,
-        borderRadius: 8,
-        width: SW(150),
-        paddingVertical: SH(5),
-        shadowColor: '#000',
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        elevation: 4,
-    },
-    dropdownItem: {
-        paddingVertical: SH(8),
-        paddingHorizontal: SW(10),
-    },
-    dropdownText: {
-        fontSize: SF(14),
-        color: Colors.black,
     },
     calendarContainer: {
         backgroundColor: Colors.white,

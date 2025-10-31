@@ -29,6 +29,9 @@ import CannotDeliverHelpCenter from '../StackScreens/HelpCenter/CannotDeliverHel
 import WithdrawScreen from '../StackScreens/Withdraw/WithdrawScreen';
 import WithdrawSucessfully from '../StackScreens/WithdrawSucessfully/WithdrawSucessfully';
 import PocketStatement from '../StackScreens/PocketStatement/PocketStatement';
+import AllTrips from '../StackScreens/AllTrips/AllTrips';
+import PayoutScreen from '../StackScreens/PayoutScreen/PayoutScreen';
+import ReachVerification from '../StackScreens/ReachVerification/ReachVerification';
 
 export type RootStackParamList = {
     Splash: undefined;
@@ -50,7 +53,10 @@ export type RootStackParamList = {
     CannotDeliverHelpCenter: undefined;
     WithdrawScreen: undefined;
     WithdrawSucessfully: undefined;
-    PocketStatement: undefined
+    PocketStatement: undefined;
+    AllTrips: undefined;
+    PayoutScreen: undefined;
+    ReachVerification: undefined;
 };
 
 export type RootTabParamList = {
@@ -58,6 +64,7 @@ export type RootTabParamList = {
     Pocket: undefined;
     Profile: undefined;
 };
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -73,7 +80,7 @@ const MainTabs: React.FC = () => {
                 tabBarActiveTintColor: '#e63946',
                 tabBarInactiveTintColor: '#3c3c3c',
                 tabBarStyle: {
-                    height: SH(60) + insets.bottom,
+                    height: SH(65) + insets.bottom,
                     backgroundColor: '#fff',
                     borderTopWidth: 0,
                     elevation: 10,
@@ -81,7 +88,7 @@ const MainTabs: React.FC = () => {
                 tabBarLabelStyle: {
                     fontSize: SF(12),
                     fontFamily: 'Ubuntu-Medium',
-                    marginBottom: SH(5)
+                    marginVertical: SH(5)
                 },
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName = 'home-outline';
@@ -150,6 +157,9 @@ const RootNavigator: React.FC = () => {
                 <Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
                 <Stack.Screen name="WithdrawSucessfully" component={WithdrawSucessfully} />
                 <Stack.Screen name="PocketStatement" component={PocketStatement} />
+                <Stack.Screen name="PayoutScreen" component={PayoutScreen} />
+                <Stack.Screen name="ReachVerification" component={ReachVerification} />
+                <Stack.Screen name="AllTrips" component={AllTrips} />
                 <Stack.Screen name="YourProfile" component={YourProfile} />
                 <Stack.Screen name="MainTabs" component={MainTabs} />
             </Stack.Navigator>

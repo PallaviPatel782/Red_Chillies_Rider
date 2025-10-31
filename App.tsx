@@ -3,6 +3,8 @@ import { StyleSheet, View, StatusBar } from 'react-native';
 import RootNavigator from './src/Routing/RootNavigator';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import FlashMessage from 'react-native-flash-message';
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store';
 
 const FlashMessageWrapper = () => {
   const insets = useSafeAreaInsets();
@@ -18,13 +20,15 @@ const FlashMessageWrapper = () => {
 
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <View style={styles.container}>
-        <RootNavigator />
-        <FlashMessageWrapper />
-      </View>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+        <View style={styles.container}>
+          <RootNavigator />
+          <FlashMessageWrapper />
+        </View>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 

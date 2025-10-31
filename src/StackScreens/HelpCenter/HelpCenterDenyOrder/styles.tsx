@@ -32,14 +32,15 @@ export default StyleSheet.create({
         width: '55%',
     },
     image: {
-        width: SW(352),
-        height: SH(129),
+        width: SW(355),
+        height: SH(130),
         alignSelf: "center",
         marginVertical: SH(20)
     },
     buttonContainer: {
         position: 'absolute',
         bottom: SH(20),
+         alignSelf: "center",
         width: '100%',
         alignItems: 'center',
         paddingHorizontal: SW(20),

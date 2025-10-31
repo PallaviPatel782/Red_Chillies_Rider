@@ -51,11 +51,11 @@ const HelpCenterDenyOrder = ({ route }: any) => {
         </Text>
         <View style={styles.warningBox}>
           <Text style={styles.warningText}>
-            You did <Text style={{ fontWeight: 'bold' }}>2 denials</Text> in the last{' '}
-            <Text style={{ fontWeight: 'bold' }}>20 orders!</Text>
+            You did <Text style={{ fontFamily: 'Ubuntu-Bold' }}>2 denials</Text> in the last{' '}
+            <Text style={{ fontFamily: 'Ubuntu-Bold' }}>20 orders!</Text>
           </Text>
         </View>
-        <Image source={image} style={styles.image} resizeMode="contain" />
+        <Image source={image} style={styles.image} resizeMode="cover" />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.denyBtnOutline}
