@@ -6,19 +6,10 @@ import Header from '../../Components/Header';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
-import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
-import { SH } from '../../utils/Responsiveness/Dimensions';
+import { SF, SH } from '../../utils/Responsiveness/Dimensions';
 
 const SplashScreen = ({ navigation }: any) => {
   const [contact, setContact] = useState('');
-  const [countryCode, setCountryCode] = useState<CountryCode>('IN');
-  const [callingCode, setCallingCode] = useState<string>('91');
-  const [visible, setVisible] = useState(false);
-
-  const onSelect = (country: Country) => {
-    setCountryCode(country.cca2);
-    setCallingCode(country.callingCode[0]);
-  };
 
   return (
     <KeyboardAvoidWrapper>
@@ -58,39 +49,16 @@ const SplashScreen = ({ navigation }: any) => {
               { flexDirection: 'row', alignItems: 'center' },
             ]}
           >
-            <TouchableOpacity
-              onPress={() => setVisible(true)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginRight: 8,
-              }}
-            >
-              <CountryPicker
-                {...{
-                  countryCode,
-                  withFilter: true,
-                  withFlag: true,
-                  withCallingCodeButton: false,
-                  withCallingCode: true,
-                  withEmoji: true,
-                  onSelect,
-                  visible,
-                  onClose: () => setVisible(false),
-                }}
-              />
-              <Text style={{ fontSize: 16, color: '#000' }}>+{callingCode}</Text>
-            </TouchableOpacity>
-
+            <Text style={{ fontSize: SF(15), color: '#000', fontFamily: "Ubuntu-Regular",margin:7 }}>+966</Text>
             <TextInput
               style={[GlobalStyles.textInput, { flex: 1 }]}
-              placeholder="9999999999"
+              placeholder="5xxxxxxxx"
               placeholderTextColor="#999"
               keyboardType="phone-pad"
               value={contact}
               onChangeText={setContact}
               returnKeyType="done"
-              maxLength={10}
+              maxLength={9}
             />
           </View>
 

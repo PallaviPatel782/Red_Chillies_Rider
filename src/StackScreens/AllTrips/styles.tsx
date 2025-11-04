@@ -276,7 +276,7 @@ export default StyleSheet.create({
   },
   greenText: {
     color: '#1B8E3E',
-    fontSize: SF(12),
+    fontSize: SF(14),
     marginLeft: 4,
     fontFamily: 'Ubuntu-Regular',
   },

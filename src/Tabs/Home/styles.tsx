@@ -24,7 +24,9 @@ export default StyleSheet.create({
     paddingVertical: SH(6),
     paddingHorizontal: SW(10),
     marginBottom: SH(8),
-    margin: -SW(15)
+    margin: -SW(15),
+    borderTopLeftRadius:12,
+    borderTopEndRadius:12
   },
   progressTitle: {
     fontSize: SF(14),

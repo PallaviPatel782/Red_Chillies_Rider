@@ -32,7 +32,7 @@ const ReachVerification = () => {
         </TouchableOpacity>
 
         {tripData ? (
-          <View style={{ paddingHorizontal: SW(16), paddingBottom: SH(16) }}>
+          <View style={{ paddingHorizontal: SW(7), paddingBottom: SH(16) }}>
             <View style={styles.pickupTag}>
               <Text style={styles.pickupText}>PICK UP</Text>
             </View>

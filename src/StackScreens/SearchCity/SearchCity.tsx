@@ -16,10 +16,18 @@ import Icon from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const allCities = [
-    'Abha', 'Al Ahsa (Hofuf)', 'Al Kharj', 'Al Lith', 'Al Majmaah', 'Al Qunfudhah',
-    'Al Qurayyat', 'Al Ula', 'Amritsar', 'Ahmedabad', 'Bangalore', 'Chennai',
-    'Delhi', 'Hyderabad', 'Kolkata', 'Mumbai', 'Pune', 'Surat', 'Jaipur', 'Lucknow',
-    // Add all Indian cities here
+    'Abha', 'Abqaiq', 'Afif', 'Ahad Rafidah', 'Al Bahah', 'Al Bukayriyah',
+    'Al Dammam', 'Al Dawadmi', 'Al Ghat', 'Al Hasa', 'Al Jubail', 'Al Kharj',
+    'Al Khobar', 'Al Lith', 'Al Majmaah', 'Al Mandaq', 'Al Qassim', 'Al Qunfudhah',
+    'Al Qurayyat', 'Al Taif', 'Al Ula', 'Al Wajh', 'Arar', 'At Tuwaim', 'Badr',
+    'Baljurashi', 'Bisha', 'Buqayq', 'Buraydah', 'Dawadmi', 'Dhahran', 'Duba',
+    'Dumat Al Jandal', 'Ha’il', 'Hafar Al Batin', 'Hotat Bani Tamim', 'Huraymila',
+    'Jazan', 'Jeddah', 'Jizan', 'Jubail Industrial City', 'Khafji', 'Khamis Mushait',
+    'Khobar', 'Layla', 'Mahd Ad Dahab', 'Makkah', 'Mastoorah', 'Medina', 'Muzahmiyah',
+    'Najran', 'Qatif', 'Qurayyat', 'Rabigh', 'Rafha', 'Ras Tanura', 'Riyadh',
+    'Sakaka', 'Saihat', 'Sharurah', 'Shaqra', 'Shoaibah', 'Sultanah', 'Tabuk',
+    'Taif', 'Tanumah', 'Tarout', 'Tayma', 'Thadiq', 'Thumamah', 'Turaif', 'Turubah',
+    'Umluj', 'Unaizah', 'Uyayna', 'Yanbu', 'Zulfi'
 ];
 
 const SearchCity = ({ navigation, route }: any) => {

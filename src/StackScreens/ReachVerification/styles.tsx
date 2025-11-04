@@ -60,7 +60,7 @@ export default StyleSheet.create({
   },
   greenText: {
     color: Colors.green,
-    fontSize: SF(12),
+    fontSize: SF(14),
     fontFamily: 'Ubuntu-Regular',
   },
   callMapRow: {
@@ -109,7 +109,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.green,
+    backgroundColor:Colors.dark_green,
     borderRadius: SW(8),
     paddingVertical: SH(12),
     marginTop: SH(10),
