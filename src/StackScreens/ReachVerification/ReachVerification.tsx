@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Linking, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Linking, Alert, Modal, Image } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../../Components/Header';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
@@ -19,8 +19,25 @@ type ReachVerificationNavigationProp = NativeStackNavigationProp<
 
 const ReachVerification = () => {
   const route = useRoute<any>();
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [timer, setTimer] = useState(166);
   const navigation = useNavigation<ReachVerificationNavigationProp>();
   const { tripData } = route.params || {};
+
+
+  useEffect(() => {
+    let interval: any;
+    if (isModalVisible && timer > 0) {
+      interval = setInterval(() => setTimer(prev => prev - 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isModalVisible, timer]);
+
+  const formatTime = (seconds: number) => {
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+  };
 
   return (
     <KeyboardAvoidWrapper>
@@ -44,7 +61,7 @@ const ReachVerification = () => {
             <Text style={styles.hotelName}>{tripData.name}</Text>
             <Text style={styles.addressText}>{tripData.address}</Text>
             <View style={styles.locationRow}>
-              <Ionicons name="time-outline" size={SF(14)} color={Colors.green} />
+              <Ionicons name="time-outline" size={SF(14)} color={Colors.dark_green} />
               <Text style={styles.greenText}> 10 mins away</Text>
             </View>
             <View style={styles.callMapRow}>
@@ -67,7 +84,7 @@ const ReachVerification = () => {
                 <Text style={styles.mapButtonText}>Map</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.reachedButton}>
+            <TouchableOpacity style={styles.reachedButton} onPress={() => setModalVisible(true)}>
               <Ionicons name="chevron-forward" size={SF(16)} color={Colors.white} />
               <Text style={styles.reachedButtonText}>Reached pickup</Text>
             </TouchableOpacity>
@@ -76,6 +93,44 @@ const ReachVerification = () => {
           <Text style={{ textAlign: 'center', marginTop: SH(20) }}>No trip data found.</Text>
         )}
       </View>
+      <Modal visible={isModalVisible} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.modalCloseIcon} onPress={() => setModalVisible(false)}>
+              <AntDesign name="close" size={20} color={Colors.black} />
+            </TouchableOpacity>
+
+            <Text style={styles.modalTitle}>Pick order now!</Text>
+
+            <View style={styles.modalImageWrapper}>
+              <Image source={require('../../assests/Images/ReachPickup.png')} style={styles.modalImage} />
+              <View style={styles.timerContainer}>
+                <Text style={styles.timerText}>{formatTime(timer)}</Text>
+              </View>
+            </View>
+
+            <Text style={styles.modalInfoText}>
+              Restaurant has marked food ready{'\n'}Please collect now!
+            </Text>
+
+            <View style={styles.modalOrderBox}>
+              <View style={styles.orderRow}>
+                <Ionicons name="document-text-outline" size={SF(14)} color={Colors.black} />
+                <Text style={styles.orderText}>Order Id: 1234</Text>
+              </View>
+              <View style={styles.orderRow}>
+                <Ionicons name="person-outline" size={SF(14)} color={Colors.black} />
+                <Text style={styles.orderText}>Customer: Deepika Rana</Text>
+              </View>
+            </View>
+
+            <TouchableOpacity style={styles.modalButton} onPress={() => navigation.navigate('PickOrder')}>
+              <Text style={styles.modalButtonText}>Okay, I'm picking!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
     </KeyboardAvoidWrapper>
   );
 };

@@ -16,7 +16,7 @@ export default StyleSheet.create({
     borderRadius: SW(16),
     paddingHorizontal: SW(10),
     paddingVertical: SH(4),
-    alignSelf:"flex-end"
+    alignSelf: 'flex-end',
   },
   rejectText: {
     color: Colors.red,
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     fontSize: SF(13),
   },
   pickupTag: {
-   backgroundColor: '#000',
+    backgroundColor: '#000',
     alignSelf: 'flex-start',
     borderRadius: 6,
     paddingHorizontal: SW(10),
@@ -32,7 +32,7 @@ export default StyleSheet.create({
     marginTop: SH(8),
   },
   pickupText: {
-   color: '#fff',
+    color: '#fff',
     fontFamily: 'Ubuntu-Regular',
     fontSize: SF(11),
   },
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     marginVertical: SH(8),
   },
   greenText: {
-    color: Colors.green,
+    color: Colors.dark_green,
     fontSize: SF(14),
     fontFamily: 'Ubuntu-Regular',
   },
@@ -68,10 +68,10 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: SH(10),
-    width:"100%"
+    width: '100%',
   },
   callButton: {
-      width:"47%",
+    width: '47%',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     paddingHorizontal: SW(35),
     borderRadius: SW(20),
     elevation: 2,
-     justifyContent: 'center', 
+    justifyContent: 'center',
   },
   callButtonText: {
     color: Colors.red,
@@ -90,14 +90,14 @@ export default StyleSheet.create({
     marginLeft: SW(6),
   },
   mapButton: {
-      width:"47%",
+    width: '47%',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.red,
     paddingVertical: SH(12),
     paddingHorizontal: SW(35),
     borderRadius: SW(20),
-     justifyContent: 'center', 
+    justifyContent: 'center',
   },
   mapButtonText: {
     color: Colors.white,
@@ -109,7 +109,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:Colors.dark_green,
+    backgroundColor: Colors.dark_green,
     borderRadius: SW(8),
     paddingVertical: SH(12),
     marginTop: SH(10),
@@ -119,5 +119,94 @@ export default StyleSheet.create({
     fontFamily: 'Ubuntu-Medium',
     fontSize: SF(14),
     marginLeft: SW(4),
+  },
+
+  /** -------------------------
+   *  🔹 MODAL STYLES BELOW 🔹
+   * ------------------------- */
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    backgroundColor: Colors.white,
+    width: '100%',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: SH(20),
+    alignItems: 'center',
+  },
+  modalCloseIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  modalTitle: {
+    fontSize: SF(16),
+    fontFamily: 'Ubuntu-Bold',
+    color: Colors.dark_green,
+    marginBottom: SH(12),
+  },
+  modalImageWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    marginBottom: 10,
+  },
+  modalImage: {
+    width:SW(100),
+    height:SH(100),
+    resizeMode: 'contain',
+  },
+  timerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: Colors.dark_green,
+    borderRadius: 8,
+    paddingHorizontal: SW(10),
+    paddingVertical: SH(2),
+  },
+  timerText: {
+    color: Colors.white,
+    fontFamily: 'Ubuntu-Medium',
+    fontSize:SF(13),
+  },
+  modalInfoText: {
+    fontSize: SF(14),
+    color: Colors.black,
+    textAlign: 'center',
+    marginBottom: SH(10),
+    fontFamily: 'Ubuntu-Bold',
+  },
+  modalOrderBox: {
+    backgroundColor: '#EAF4EC',
+    borderRadius: 8,
+    padding: SH(10),
+    width: '100%',
+    marginBottom: SH(14),
+  },
+  orderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom:SH(4),
+  },
+  orderText: {
+    fontSize: SF(13),
+    color:"#474747",
+    marginLeft: SW(6),
+  },
+  modalButton: {
+    backgroundColor: Colors.dark_green,
+    borderRadius: 8,
+    paddingVertical: SH(12),
+    width: '100%',
+    alignItems: 'center',
+  },
+  modalButtonText: {
+    color: Colors.white,
+    fontFamily: 'Ubuntu-Regular',
+    fontSize: SF(15),
   },
 });

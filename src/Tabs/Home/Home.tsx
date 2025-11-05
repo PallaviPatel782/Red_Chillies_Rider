@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { setStatus, setShift } from '../../../src/redux/slices/statusShiftStore';
+import { SH, SF, SW } from '../../utils/Responsiveness/Dimensions';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = () => {
   const navigation = useNavigation<any>();
@@ -33,7 +35,44 @@ const Home = () => {
           resizeMode="cover"
         />
 
-        {/* --- Progress Card --- */}
+        {/* --- In Progress Card --- */}
+        <View style={styles.progressCard}>
+          <View style={[styles.cardHeader,{backgroundColor:Colors.yellow}]}>
+            <View style={styles.cardHeaderRow}>
+               <FontAwesome5 name="motorcycle" size={18} color="#000" style={styles.cardIcon} />
+              <Text style={[styles.progressTitle,{color:Colors.black}]}>In Progress Trip</Text>
+            </View>
+          </View>
+
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: SH(6), backgroundColor: Colors.red, padding: SW(5), borderRadius: 5 }}>
+            <Ionicons name="document-text-outline" size={SF(14)} color={Colors.white} />
+            <Text style={styles.orderIdText}> Order Id: 1234</Text>
+          </View>
+
+          <TouchableOpacity style={styles.pickupButton}>
+            <Text style={styles.pickupButtonText}>{firstTrip.buttonLabel}</Text>
+          </TouchableOpacity>
+
+          <View style={styles.tripHeaderRow}>
+            <Text style={[styles.tripName,{paddingTop:SH(5)}]}>{firstTrip.name}</Text>
+          </View>
+
+          <Text style={styles.tripAddress}>{firstTrip.address}</Text>
+
+          <View style={styles.tripRow}>
+            <Text style={styles.tripInfo}>
+              🧍‍♂️ Pickup From:{' '}
+              <Text style={styles.boldText}>{firstTrip.pickup.distance}</Text>
+            </Text>
+            <Text style={styles.tripInfo}>
+              🛵 Drop To:{' '}
+              <Text style={styles.boldText}>{firstTrip.drop.distance}</Text>
+            </Text>
+          </View>
+
+        </View>
+
         <View style={styles.progressCard}>
           <View style={styles.cardHeader}>
             <View style={styles.cardHeaderRow}>

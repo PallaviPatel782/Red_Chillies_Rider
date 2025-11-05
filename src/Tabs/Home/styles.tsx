@@ -30,7 +30,7 @@ export default StyleSheet.create({
   },
   progressTitle: {
     fontSize: SF(14),
-    fontFamily: 'Ubuntu-Medium',
+    fontFamily: 'Ubuntu-Bold',
     color: '#2266D1',
   },
   shiftRow: {
@@ -140,6 +140,12 @@ export default StyleSheet.create({
     fontSize: SF(15),
     fontFamily: 'Ubuntu-Medium',
     color: '#000',
+  },
+   orderIdText: {
+    color:Colors.white,
+    fontFamily: 'Ubuntu-Regular',
+    fontSize: SF(12),
+    marginLeft: SW(4),
   },
   earningBadge: {
     position: 'absolute',

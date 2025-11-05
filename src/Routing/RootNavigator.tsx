@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { NavigationContainer, NavigationHelpersContext } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SplashScreen from '../StackScreens/SplashScreen/SplashScreen';
 import Home from '../Tabs/Home/Home';
@@ -32,6 +32,8 @@ import PocketStatement from '../StackScreens/PocketStatement/PocketStatement';
 import AllTrips from '../StackScreens/AllTrips/AllTrips';
 import PayoutScreen from '../StackScreens/PayoutScreen/PayoutScreen';
 import ReachVerification from '../StackScreens/ReachVerification/ReachVerification';
+import PickOrder from '../StackScreens/PickOrder/PickOrder';
+import DropOrder from '../StackScreens/DropOrder/DropOrder';
 
 export type RootStackParamList = {
     Splash: undefined;
@@ -57,6 +59,8 @@ export type RootStackParamList = {
     AllTrips: undefined;
     PayoutScreen: undefined;
     ReachVerification: undefined;
+    PickOrder:undefined;
+    DropOrder:undefined;
 };
 
 export type RootTabParamList = {
@@ -136,8 +140,8 @@ const RootNavigator: React.FC = () => {
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{ headerShown: false }}
-                initialRouteName="Loading"
-                // initialRouteName="MainTabs"
+                // initialRouteName="Loading"
+                initialRouteName="MainTabs"
             >
                 <Stack.Screen name="Loading" component={Loading} />
                 <Stack.Screen name="Splash" component={SplashScreen} />
@@ -159,6 +163,8 @@ const RootNavigator: React.FC = () => {
                 <Stack.Screen name="PocketStatement" component={PocketStatement} />
                 <Stack.Screen name="PayoutScreen" component={PayoutScreen} />
                 <Stack.Screen name="ReachVerification" component={ReachVerification} />
+                <Stack.Screen name="PickOrder" component={PickOrder} />
+                <Stack.Screen name="DropOrder" component={DropOrder} />
                 <Stack.Screen name="AllTrips" component={AllTrips} />
                 <Stack.Screen name="YourProfile" component={YourProfile} />
                 <Stack.Screen name="MainTabs" component={MainTabs} />

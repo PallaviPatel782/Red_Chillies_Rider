@@ -281,7 +281,7 @@ export default StyleSheet.create({
     fontFamily: 'Ubuntu-Regular',
   },
   acceptButton: {
-    backgroundColor: '#1B8E3E',
+    backgroundColor:Colors.dark_green,
     borderRadius: 30,
     paddingVertical: SH(12),
     width: '100%',
