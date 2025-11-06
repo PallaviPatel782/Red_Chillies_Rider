@@ -38,9 +38,11 @@ const StatusShiftModal: React.FC<Props> = ({ onStatusChange, onShiftSelect }) =>
     ];
 
     useEffect(() => {
-        onStatusChange?.('Online');
-        onShiftSelect?.({ label: 'Morning', time: '7 AM – 3 PM' });
-    }, []);
+        if (status === 'Offline' && !shift) {
+            onStatusChange?.('Online');
+            onShiftSelect?.({ label: 'Morning', time: '7 AM – 3 PM' });
+        }
+    }, [status, shift]);
 
     const handleStatusPress = (newStatus: 'Online' | 'On break' | 'Offline') => {
         dispatch(setStatus(newStatus));

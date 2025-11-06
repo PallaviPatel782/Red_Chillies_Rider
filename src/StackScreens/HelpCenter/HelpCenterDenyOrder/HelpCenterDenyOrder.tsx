@@ -12,35 +12,36 @@ import KeyboardAvoidWrapper from '../../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../../utils/GlobalStyles/GlobalStyles';
 import styles from './styles';
 import Colors from '../../../utils/Colors/Colors';
-import { SH, SW } from '../../../utils/Responsiveness/Dimensions';
+import { SH } from '../../../utils/Responsiveness/Dimensions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch } from 'react-redux';
+import { setStatus } from '../../../redux/slices/statusShiftStore';
 
-const HelpCenterDenyOrder = ({ route }: any) => {
+const HelpCenterDenyOrder = ({ route, navigation }: any) => {
   const { selectedReason } = route.params || {};
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const getImageData = () => {
     if (selectedReason?.includes('Met with an accident')) {
-      return {
-        image: require('../../../assests/Images/CannotDeliver.png'),
-      };
+      return { image: require('../../../assests/Images/CannotDeliver.png') };
     } else if (selectedReason?.includes('Restaurant is closed')) {
-      return {
-        image: require('../../../assests/Images/Restaurantclosed.png'),
-      };
+      return { image: require('../../../assests/Images/Restaurantclosed.png') };
     } else if (selectedReason?.includes('Can’t find restaurant')) {
-      return {
-        image: require('../../../assests/Images/Cantfindrestaurant.png'),
-      };
+      return { image: require('../../../assests/Images/Cantfindrestaurant.png') };
     } else {
-      return {
-        image: require('../../../assests/Images/CannotDeliver.png'),
-      };
+      return { image: require('../../../assests/Images/CannotDeliver.png') };
     }
   };
 
   const { image } = getImageData();
+
+  const handleDenyOrder = () => {
+    setModalVisible(false);
+    dispatch(setStatus('Offline'));
+    navigation.navigate('MainTabs')
+  };
 
   return (
     <KeyboardAvoidWrapper>
@@ -49,18 +50,20 @@ const HelpCenterDenyOrder = ({ route }: any) => {
         <Text style={styles.reasonTitle}>
           {selectedReason ?? 'No reason selected'}
         </Text>
+
         <View style={styles.warningBox}>
           <Text style={styles.warningText}>
             You did <Text style={{ fontFamily: 'Ubuntu-Bold' }}>2 denials</Text> in the last{' '}
             <Text style={{ fontFamily: 'Ubuntu-Bold' }}>20 orders!</Text>
           </Text>
         </View>
+
         <Image source={image} style={styles.image} resizeMode="cover" />
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.denyBtnOutline}
-            onPress={() => setModalVisible(true)}
-          >
+            onPress={() => setModalVisible(true)}>
             <Text style={styles.denyText}>Deny order</Text>
           </TouchableOpacity>
 
@@ -84,6 +87,7 @@ const HelpCenterDenyOrder = ({ route }: any) => {
                 <Ionicons name="close" size={22} color={Colors.black} />
               </TouchableOpacity>
             </View>
+
             <View style={styles.modalCard}>
               <View style={styles.cardRow}>
                 <MaterialCommunityIcons
@@ -101,6 +105,7 @@ const HelpCenterDenyOrder = ({ route }: any) => {
                 {selectedReason?.split(': ')[1] ?? 'Not provided'}
               </Text>
             </View>
+
             <View style={styles.infoBox}>
               <View style={styles.infoHeader}>
                 <MaterialCommunityIcons
@@ -108,7 +113,7 @@ const HelpCenterDenyOrder = ({ route }: any) => {
                   size={20}
                   color={Colors.red}
                 />
-                <View style={{ flex: 1, marginLeft: SW(8) }}>
+                <View style={{ flex: 1, marginLeft: 8 }}>
                   <Text style={styles.infoText}>
                     You will be taken offline for denial
                   </Text>
@@ -117,17 +122,14 @@ const HelpCenterDenyOrder = ({ route }: any) => {
                     orders
                   </Text>
                 </View>
-                <Ionicons
-                  name="chevron-forward"
-                  size={20}
-                  color={'#777'}
-                />
+                <Ionicons name="chevron-forward" size={20} color={'#777'} />
               </View>
             </View>
+
             <View style={styles.modalButtonContainer}>
               <TouchableOpacity
                 style={styles.modalDenyBtn}
-                onPress={() => setModalVisible(false)}>
+                onPress={handleDenyOrder}>
                 <Text style={styles.modalDenyText}>Deny order</Text>
               </TouchableOpacity>
 

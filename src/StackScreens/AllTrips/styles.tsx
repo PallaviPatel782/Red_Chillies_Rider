@@ -282,8 +282,8 @@ export default StyleSheet.create({
   },
   acceptButton: {
     backgroundColor:Colors.dark_green,
-    borderRadius: 30,
-    paddingVertical: SH(12),
+    borderRadius: 10,
+    paddingVertical: SH(10),
     width: '100%',
     alignItems: 'center',
     marginTop: SH(15),

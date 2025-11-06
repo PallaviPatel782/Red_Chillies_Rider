@@ -13,11 +13,19 @@ import { RootState } from '../../redux/store';
 import { setStatus, setShift } from '../../../src/redux/slices/statusShiftStore';
 import { SH, SF, SW } from '../../utils/Responsiveness/Dimensions';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const Home = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const { status, shift } = useSelector((state: RootState) => state.status);
+
+  useFocusEffect(
+  useCallback(() => {
+    console.log('Status on focus:', status);
+  }, [status])
+);
 
   const firstTrip = deliveryData[0];
 

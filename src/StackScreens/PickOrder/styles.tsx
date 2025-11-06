@@ -7,6 +7,7 @@ export default StyleSheet.create({
     paddingHorizontal: SW(20),
     paddingTop: SH(10),
   },
+
   timerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -24,14 +25,15 @@ export default StyleSheet.create({
   },
   timerText: {
     color: Colors.white,
-    fontFamily: 'Ubuntu-Regular',
+    fontFamily: 'Ubuntu-Medium',
     fontSize: SF(12),
   },
   timerStatus: {
     color: Colors.dark_green,
-    fontSize: SF(14),
+    fontSize: SF(13),
     fontFamily: 'Ubuntu-Medium',
   },
+
   orderCard: {
     backgroundColor: Colors.white,
     borderRadius: 12,
@@ -56,14 +58,15 @@ export default StyleSheet.create({
     backgroundColor: '#eee',
     marginVertical: SH(8),
   },
+
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SH(4),
+    marginBottom: SH(6),
   },
   itemName: {
     flex: 1,
-    marginLeft: SW(6),
+    marginLeft: SW(2),
     fontSize: SF(13),
     color: Colors.black,
     fontFamily: 'Ubuntu-Regular',
@@ -73,6 +76,7 @@ export default StyleSheet.create({
     color: Colors.black,
     fontFamily: 'Ubuntu-Medium',
   },
+
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -84,23 +88,25 @@ export default StyleSheet.create({
     color: Colors.black,
     fontSize: SF(13),
   },
+
   paidTagBox: {
-    backgroundColor: '#E0F0FF',
-    borderRadius: 4,
-    borderColor: 'blue',
+    borderRadius: 20,
     borderWidth: 1,
-    paddingHorizontal: SW(6),
-    paddingVertical: SH(2),
-    marginLeft: SW(6),
+    paddingHorizontal: SW(8),
+    paddingVertical: SH(3),
+    marginLeft: SW(8),
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   paidTagText: {
-    color: 'blue',
     fontSize: SF(11),
     fontFamily: 'Ubuntu-Medium',
   },
+
   totalAmount: {
     fontFamily: 'Ubuntu-Medium',
     color: Colors.black,
+    fontSize: SF(14),
   },
 
   pickButton: {
@@ -109,13 +115,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.dark_green,
     borderRadius: SW(8),
-    paddingVertical: SH(10),
-    marginTop: SH(10),
+    paddingVertical: SH(12),
+    marginTop: SH(16),
   },
   pickButtonText: {
     color: Colors.white,
     fontFamily: 'Ubuntu-Medium',
-    fontSize: SF(14),
+    fontSize: SF(15),
     marginLeft: SW(4),
   },
 });

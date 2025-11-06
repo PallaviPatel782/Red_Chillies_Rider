@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SplashScreen from '../StackScreens/SplashScreen/SplashScreen';
 import Home from '../Tabs/Home/Home';
@@ -34,6 +34,9 @@ import PayoutScreen from '../StackScreens/PayoutScreen/PayoutScreen';
 import ReachVerification from '../StackScreens/ReachVerification/ReachVerification';
 import PickOrder from '../StackScreens/PickOrder/PickOrder';
 import DropOrder from '../StackScreens/DropOrder/DropOrder';
+import PaidOnline from '../StackScreens/PaidOnline/PaidOnline';
+import CashOnDelivery from '../StackScreens/CashOnDelivery/CashOnDelivery';
+import DeliveryComplete from '../StackScreens/DeliveryComplete/DeliveryComplete';
 
 export type RootStackParamList = {
     Splash: undefined;
@@ -58,9 +61,12 @@ export type RootStackParamList = {
     PocketStatement: undefined;
     AllTrips: undefined;
     PayoutScreen: undefined;
-    ReachVerification: undefined;
-    PickOrder:undefined;
-    DropOrder:undefined;
+    ReachVerification: { tripData: any };
+    PickOrder: { tripData: any };
+    DropOrder: { tripData: any };
+    PaidOnline: { tripData: any };
+    CashOnDelivery: { tripData: any };
+    DeliveryComplete: { tripData: any };
 };
 
 export type RootTabParamList = {
@@ -140,8 +146,8 @@ const RootNavigator: React.FC = () => {
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{ headerShown: false }}
-                // initialRouteName="Loading"
-                initialRouteName="MainTabs"
+                initialRouteName="Loading"
+                // initialRouteName="MainTabs"
             >
                 <Stack.Screen name="Loading" component={Loading} />
                 <Stack.Screen name="Splash" component={SplashScreen} />
@@ -165,6 +171,9 @@ const RootNavigator: React.FC = () => {
                 <Stack.Screen name="ReachVerification" component={ReachVerification} />
                 <Stack.Screen name="PickOrder" component={PickOrder} />
                 <Stack.Screen name="DropOrder" component={DropOrder} />
+                <Stack.Screen name="PaidOnline" component={PaidOnline} />
+                <Stack.Screen name="CashOnDelivery" component={CashOnDelivery} />
+                <Stack.Screen name="DeliveryComplete" component={DeliveryComplete} />
                 <Stack.Screen name="AllTrips" component={AllTrips} />
                 <Stack.Screen name="YourProfile" component={YourProfile} />
                 <Stack.Screen name="MainTabs" component={MainTabs} />

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import statusReducer from './slices/statusShiftStore'
+import locationReducer from './slices/locationStore'
 
 export const store = configureStore({
   reducer: {
     status: statusReducer,
+    locationStore: locationReducer,
   },
 });
 

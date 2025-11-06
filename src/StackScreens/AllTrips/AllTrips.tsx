@@ -73,7 +73,7 @@ const AllTrips = () => {
                             onPress={() => { }}>
                             <View style={styles.timerCircle}>
                                 <AntDesign name="clockcircleo" size={16} color={Colors.red} />
-                                <Text style={styles.timerText}>30.00</Text>
+                               <Text style={styles.timerText}>{selectedTrip?.timer}</Text>
                             </View>
 
                             <Text style={styles.earningLabel}>Expected earnings</Text>

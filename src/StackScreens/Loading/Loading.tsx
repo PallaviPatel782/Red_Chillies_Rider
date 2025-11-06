@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Image, Platform, PermissionsAndroid, Alert } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import { useDispatch } from 'react-redux';
+import { setLocation } from '../../redux/slices/locationStore';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Routing/RootNavigator';
 import Colors from '../../utils/Colors/Colors';
@@ -12,6 +14,7 @@ type Props = {
 };
 
 const Loading: React.FC<Props> = ({ navigation }) => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -28,10 +31,8 @@ const Loading: React.FC<Props> = ({ navigation }) => {
             },
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('Location permission granted');
             getCurrentLocation();
           } else {
-            console.log('Location permission denied');
             navigation.replace('Splash');
           }
         } else {
@@ -46,7 +47,9 @@ const Loading: React.FC<Props> = ({ navigation }) => {
     const getCurrentLocation = () => {
       Geolocation.getCurrentPosition(
         (position) => {
+          const { latitude, longitude } = position.coords;
           console.log('Current position:', position.coords);
+          dispatch(setLocation({ latitude, longitude }));
           navigation.replace('Splash');
         },
         (error) => {
@@ -57,12 +60,13 @@ const Loading: React.FC<Props> = ({ navigation }) => {
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
     };
+
     const timer = setTimeout(() => {
       requestLocationPermission();
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [navigation]);
+  }, [dispatch, navigation]);
 
   return (
     <View style={styles.container}>
