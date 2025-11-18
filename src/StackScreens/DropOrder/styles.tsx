@@ -80,6 +80,25 @@ export default StyleSheet.create({
     backgroundColor: '#ddd',
     marginVertical: SH(14),
   },
+  chatButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: "#F5F5F6",
+    paddingVertical: SH(10),
+    paddingHorizontal: SW(10),
+    borderRadius: 20,
+    marginVertical: SH(10),
+    borderColor: "#5B66AB",
+    borderWidth: 0.5
+  },
+  chatButtonText: {
+    color: "#5B66AB",
+    fontSize: SF(14),
+    fontFamily: 'Ubuntu-Medium',
+    marginLeft: 5,
+  },
+
   reachedButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -87,6 +106,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.dark_green,
     borderRadius: SW(8),
     paddingVertical: SH(12),
+    marginVertical:SH(10)
   },
   reachedButtonText: {
     color: Colors.white,
@@ -94,4 +114,27 @@ export default StyleSheet.create({
     fontSize: SF(14),
     marginLeft: SW(4),
   },
+   rejectBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffecec',
+    borderRadius: SW(16),
+    paddingHorizontal: SW(10),
+    paddingVertical: SH(4),
+    alignSelf: 'flex-end',
+  },
+  rejectText: {
+    color: Colors.red,
+    fontFamily: 'Ubuntu-Medium',
+    fontSize: SF(13),
+  },
+   image: {
+  width: SW(200),
+  height: SH(200),
+  position: "absolute",
+  bottom: SH(10),
+  alignSelf: "center",
+  resizeMode: "contain",
+},
+
 });

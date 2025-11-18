@@ -3,21 +3,9 @@ import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import Colors from '../../utils/Colors/Colors';
 
 export default StyleSheet.create({
-  paymentInfoBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E6F8ED',
-    borderWidth: 1,
-    borderColor: Colors.green,
-    padding: SH(10),
-    borderRadius: SW(20),
-    marginTop: SH(15),
-    marginHorizontal: SW(15),
-  },
   paymentRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: SH(20),
   },
   paymentTitle: {
     color: Colors.black,
@@ -87,46 +75,6 @@ export default StyleSheet.create({
     fontSize: SF(14),
     fontFamily: 'Ubuntu-Regular',
     marginLeft: SW(5),
-  },
-  collectBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E6F8ED',
-    borderColor: Colors.dark_green,
-    borderWidth: 1,
-    borderRadius: SW(8),
-    padding: SH(10),
-    marginTop: SH(15),
-  },
-  collectText: {
-    marginLeft: SW(8),
-    color: Colors.black,
-    fontFamily: 'Ubuntu-Regular',
-    fontSize: SF(14),
-  },
-  qrBox: {
-    alignItems: 'center',
-    marginTop: SH(20),
-  },
-  qrImage: {
-    width: SW(180),
-    height: SW(180),
-  },
-  orText: {
-    color: Colors.gray,
-    marginVertical: SH(8),
-    fontSize: SF(12),
-  },
-  cashCollectText: {
-    fontSize: SF(14),
-    fontFamily: 'Ubuntu-Regular',
-    color: Colors.black,
-  },
-  collectLabel: {
-    fontSize: SF(14),
-    fontFamily: 'Ubuntu-Regular',
-    color: Colors.dark_green,
-    marginLeft: SW(6),
   },
   customerName: {
     fontSize: SF(15),
@@ -285,5 +233,82 @@ export default StyleSheet.create({
     fontSize: SF(15),
     color: Colors.black,
   },
+  otpOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
+
+  otpCard: {
+    width: SW(300),
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: SH(25),
+    alignItems: "center",
+  },
+
+  otpTitle: {
+    fontSize: SF(18),
+    fontFamily: "Ubuntu-Bold",
+    color: Colors.dark_green,
+    marginTop: SH(10),
+  },
+
+  otpSubtitle: {
+    fontSize: SF(12),
+    fontFamily: "Ubuntu-Medium",
+    color: "#555",
+    marginTop: SH(4),
+    marginBottom: SH(10),
+  },
+
+  otpInput: {
+    width: SW(200),
+    height: SH(45),
+    borderWidth: 1,
+    borderColor: "#D9D9D9",
+    borderRadius: 10,
+    textAlign: "center",
+    fontSize: SF(16),
+    fontFamily: "Ubuntu-Bold",
+    letterSpacing: 6,
+    color: Colors.black,
+    marginTop: SH(10),
+  },
+
+  verifyBtn: {
+    backgroundColor: Colors.dark_green,
+    marginTop: SH(15),
+    paddingVertical: SH(10),
+    paddingHorizontal: SW(20),
+    borderRadius: 8,
+  },
+
+  verifyBtnText: {
+    color: "#fff",
+    fontFamily: "Ubuntu-Medium",
+    fontSize: SF(14),
+  },
+
+  cancelText: {
+    color: Colors.red,
+    marginTop: SH(10),
+    fontFamily: "Ubuntu-Medium",
+  },
+
+  errorText: {
+    color: "red",
+    marginTop: SH(5),
+    fontFamily: "Ubuntu-Medium",
+  },
+ image: {
+  width: SW(200),
+  height: SH(200),
+  position: "absolute",
+  bottom: SH(10),
+  alignSelf: "center",
+  resizeMode: "contain",
+},
 
 });

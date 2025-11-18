@@ -39,13 +39,12 @@ export default StyleSheet.create({
     rupeeSymbol: {
         fontSize: SF(28),
         color: '#000',
-        marginRight: SW(4),
         fontFamily: 'Ubuntu-Regular',
     },
     amountInput: {
         fontSize: SF(28),
         color: '#000',
-        minWidth: SW(100),
+        minWidth: SW(50),
         fontFamily: 'Ubuntu-Regular',
     },
     withdrawButton: {

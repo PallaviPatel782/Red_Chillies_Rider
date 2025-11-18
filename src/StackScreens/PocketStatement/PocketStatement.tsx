@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import styles from './styles';
 import { SH } from '../../utils/Responsiveness/Dimensions';
 
 const filterOptions = [
+  'Today',
   'Last 7 days',
   'Last 30 days',
   'This Month',
@@ -47,7 +48,6 @@ const PocketStatement = () => {
   const [selectedFilter, setSelectedFilter] = useState('Last 7 days');
   const [range, setRange] = useState<{ start?: string; end?: string }>({});
 
-  // handle calendar range selection
   const onDayPress = (day: any) => {
     if (!range.start || (range.start && range.end)) {
       setRange({ start: day.dateString, end: undefined });
@@ -67,7 +67,6 @@ const PocketStatement = () => {
     }
     if (range.end) {
       marked[range.end] = { endingDay: true, color: Colors.green, textColor: '#fff' };
-
       let current = new Date(range.start!);
       const end = new Date(range.end);
       while (current < end) {
@@ -86,6 +85,64 @@ const PocketStatement = () => {
     return date.toLocaleDateString('en-GB', options);
   };
 
+  const applyFilter = (filter: string) => {
+    setSelectedFilter(filter);
+    setShowFilterModal(false);
+
+    const today = new Date();
+
+    if (filter === 'Today') {
+      const date = today.toISOString().split('T')[0];
+      setRange({ start: date, end: date });
+    }
+
+    else if (filter === 'Last 7 days') {
+      const end = today;
+      const start = new Date();
+      start.setDate(today.getDate() - 6);
+      setRange({
+        start: start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+      });
+    }
+
+    else if (filter === 'Last 30 days') {
+      const end = today;
+      const start = new Date();
+      start.setDate(today.getDate() - 29);
+      setRange({
+        start: start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+      });
+    }
+
+    else if (filter === 'This Month') {
+      const start = new Date(today.getFullYear(), today.getMonth(), 1);
+      const end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      setRange({
+        start: start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+      });
+    }
+
+    else if (filter === 'Last Month') {
+      const start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      const end = new Date(today.getFullYear(), today.getMonth(), 0);
+      setRange({
+        start: start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+      });
+    }
+
+    else if (filter === 'Date Range') {
+      setShowCalendar(true);
+    }
+  };
+
+  useEffect(() => {
+    applyFilter('Last 7 days');
+  }, []);
+
   return (
     <KeyboardAvoidWrapper>
       <View style={GlobalStyles.container}>
@@ -95,19 +152,20 @@ const PocketStatement = () => {
             style={styles.filterButton}
             onPress={() => setShowFilterModal(true)}>
             <Icon name="filter" size={16} color={Colors.black} />
-            <Text style={styles.filterText}> Filters ▾</Text>
+            <Text style={styles.filterText}> {selectedFilter} ▾</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.dateRow}>
           <View style={styles.line} />
           <Text style={styles.dateText}>
             {range.start && range.end
-              ? `${formatDate(range.start)} to ${formatDate(range.end)}`
-              : '12 Oct to 19 Oct'}
+              ? range.start === range.end
+                ? `Today (${formatDate(range.start)})`
+                : `${formatDate(range.start)} to ${formatDate(range.end)}`
+              : 'Select Date Range'}
           </Text>
           <View style={styles.line} />
         </View>
-
 
         <View style={styles.divider} />
         <FlatList
@@ -127,7 +185,9 @@ const PocketStatement = () => {
                   styles.transactionAmount,
                   { color: item.amount < 0 ? 'red' : 'green' },
                 ]}>
-                {item.amount < 0 ? `-₹${Math.abs(item.amount)}` : `+₹${item.amount}`}
+                {item.amount < 0
+                  ? `- ${Math.abs(item.amount)} SAR`
+                  : `+ ${item.amount} SAR`}
               </Text>
             </View>
           )}
@@ -148,13 +208,7 @@ const PocketStatement = () => {
                       <TouchableOpacity
                         key={item}
                         style={styles.dropdownItem}
-                        onPress={() => {
-                          setSelectedFilter(item);
-                          setShowFilterModal(false);
-                          if (item === 'Date Range') {
-                            setShowCalendar(true);
-                          }
-                        }}>
+                        onPress={() => applyFilter(item)}>
                         <Text style={styles.dropdownText}>{item}</Text>
                       </TouchableOpacity>
                     ))}
@@ -164,7 +218,6 @@ const PocketStatement = () => {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-
         <Modal
           visible={showCalendar}
           transparent
@@ -190,7 +243,6 @@ const PocketStatement = () => {
             </View>
           </View>
         </Modal>
-
       </View>
     </KeyboardAvoidWrapper>
   );

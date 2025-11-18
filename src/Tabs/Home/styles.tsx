@@ -12,8 +12,9 @@ export default StyleSheet.create({
   progressCard: {
     backgroundColor: Colors.white,
     borderRadius: 12,
-    padding: SW(15),
-    marginTop: SH(15),
+    paddingVertical: SH(9.5),
+    paddingHorizontal: SW(10),
+    marginVertical: SH(5),
     elevation: 3,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -22,16 +23,17 @@ export default StyleSheet.create({
   cardHeader: {
     backgroundColor: '#EAF1FF',
     paddingVertical: SH(6),
-    paddingHorizontal: SW(10),
+    paddingHorizontal: SW(8),
     marginBottom: SH(8),
-    margin: -SW(15),
-    borderTopLeftRadius:12,
-    borderTopEndRadius:12
+    margin: -SW(10),
+    borderTopLeftRadius: 12,
+    borderTopEndRadius: 12
   },
   progressTitle: {
     fontSize: SF(14),
     fontFamily: 'Ubuntu-Bold',
     color: '#2266D1',
+    marginLeft: SW(5)
   },
   shiftRow: {
     flexDirection: 'row',
@@ -40,18 +42,17 @@ export default StyleSheet.create({
     marginTop: SH(5),
   },
   inProgressBadge: {
-    backgroundColor: '#D9F6E5',
     paddingHorizontal: SW(8),
     paddingVertical: SH(2),
     borderRadius: 6,
     marginRight: SW(8),
-    marginVertical: SH(5),
+    marginTop: SH(10),
     alignSelf: "flex-start",
   },
   inProgressText: {
-    color: '#1B8E3E',
+    color: '#41495C',
     fontSize: SF(12),
-    fontFamily: 'Ubuntu-Medium',
+    fontFamily: 'Ubuntu-Regular',
     padding: SW(2)
   },
   shiftTime: {
@@ -62,33 +63,60 @@ export default StyleSheet.create({
   progressRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: SH(12),
+    marginTop: SH(7),
   },
+
   progressItem: {
     flex: 1,
+    borderRadius: 12,
+    paddingVertical: SH(10),
+    paddingHorizontal: SW(15),
     alignItems: 'flex-start',
+    marginHorizontal: SW(3),
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
+
+  iconCircle: {
+    width: SW(30),
+    height: SW(30),
+    borderRadius: SW(15),
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   amount: {
-    fontSize: SF(15),
-    color: Colors.black,
-    fontFamily: 'Ubuntu-Medium',
+    color: '#fff',
+    fontSize: SF(14),
+    fontFamily: 'Ubuntu-Bold',
+    marginTop: SH(5),
   },
+
   hours: {
-    fontSize: SF(15),
-    color: Colors.black,
-    fontFamily: 'Ubuntu-Medium',
+    color: '#fff',
+    fontSize: SF(16),
+    fontFamily: 'Ubuntu-Bold',
+    marginTop: SH(5),
   },
+
   trips: {
-    fontSize: SF(15),
-    color: Colors.black,
-    fontFamily: 'Ubuntu-Medium',
+    color: '#fff',
+    fontSize: SF(16),
+    fontFamily: 'Ubuntu-Bold',
+    marginTop: SH(5),
   },
+
   itemLabel: {
+    color: '#fff',
     fontSize: SF(12),
-    color: "#26662F",
     fontFamily: 'Ubuntu-Regular',
     marginTop: SH(2),
   },
+
+
   startButton: {
     marginTop: SH(15),
     paddingVertical: SH(10),
@@ -141,8 +169,27 @@ export default StyleSheet.create({
     fontFamily: 'Ubuntu-Medium',
     color: '#000',
   },
-   orderIdText: {
-    color:Colors.white,
+  addressBox: {
+    paddingVertical: SH(8),
+  },
+  labelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  addressLabel: {
+    fontSize: SF(13),
+    color: '#2EAD64',
+    fontFamily: 'Ubuntu-Regular',
+  },
+  addressText: {
+    fontSize: SF(14),
+    color: '#333',
+    lineHeight: 20,
+    fontFamily: 'Ubuntu-Regular',
+  },
+  orderIdText: {
+    color: Colors.white,
     fontFamily: 'Ubuntu-Regular',
     fontSize: SF(12),
     marginLeft: SW(4),
@@ -170,7 +217,7 @@ export default StyleSheet.create({
     fontSize: SF(13),
     color: '#444',
     fontFamily: 'Ubuntu-Regular',
-    marginBottom: 2,
+    marginVertical: SH(5),
   },
   boldText: {
     fontFamily: 'Ubuntu-Medium',
@@ -181,7 +228,7 @@ export default StyleSheet.create({
     borderRadius: 6,
     paddingHorizontal: SW(10),
     paddingVertical: SH(6),
-    marginTop: SH(8),
+    marginBottom: SH(5),
   },
   pickupButtonText: {
     color: '#fff',
@@ -202,6 +249,145 @@ export default StyleSheet.create({
 
   cardIcon: {
     marginRight: SW(6),
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  modalCard: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingVertical: SH(20),
+    paddingHorizontal: SW(20),
+    alignItems: 'center',
+  },
+  timerCircle: {
+    borderWidth: 2,
+    borderColor: Colors.red,
+    borderRadius: 40,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    height: 40,
+    marginBottom: 8,
+  },
+  timerText: {
+    marginLeft: 6,
+    color: Colors.red,
+    fontSize: SF(14),
+    fontFamily: 'Ubuntu-Medium',
+  },
+  earningLabel: {
+    fontSize: SF(14),
+    fontFamily: 'Ubuntu-Regular',
+    color: '#777',
+  },
+  earningValue: {
+    fontSize: SF(24),
+    fontFamily: 'Ubuntu-Bold',
+    color: '#000',
+    marginBottom: SH(10),
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: SH(10),
+  },
+  distanceText: {
+    fontSize: SF(13),
+    color: '#333',
+    fontFamily: 'Ubuntu-Regular',
+  },
+  pickupCard: {
+    padding: SW(5),
+    width: '100%',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#ddd',
+    marginVertical: SH(14),
+  },
+  pickupTitle: {
+    fontSize: SF(14),
+    fontFamily: 'Ubuntu-Medium',
+    color: '#000',
+    marginBottom: SH(4),
+  },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: SH(6),
+  },
+  greenText: {
+    color: '#1B8E3E',
+    fontSize: SF(14),
+    marginLeft: 4,
+    fontFamily: 'Ubuntu-Regular',
+  },
+  acceptButton: {
+    backgroundColor: Colors.dark_green,
+    borderRadius: 10,
+    paddingVertical: SH(10),
+    width: '100%',
+    alignItems: 'center',
+    marginTop: SH(15),
+  },
+  acceptText: {
+    color: '#fff',
+    fontSize: SF(15),
+    fontFamily: 'Ubuntu-Medium',
+  },
+  onlineModalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
+
+  onlineModalCard: {
+    backgroundColor: '#fff',
+    padding: SH(20),
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    elevation: 10,
+  },
+
+  onlineModalContent: {
+    alignItems: 'center',
+  },
+
+  offlineTitle: {
+    fontSize: SF(16),
+    fontFamily: 'Ubuntu-Bold',
+    marginTop: SH(10),
+    textAlign: 'center',
+  },
+
+  offlineSubtitle: {
+    fontSize: SF(14),
+    color: '#555',
+    fontFamily: 'Ubuntu-Regular',
+    marginTop: SH(5),
+    textAlign: 'center',
+  },
+
+  goOnlineBtn: {
+    width: '100%',
+    paddingVertical: SH(12),
+    backgroundColor: Colors.dark_green,
+    borderRadius: 10,
+    marginTop: SH(18),
+    alignItems: 'center',
+  },
+
+  goOnlineText: {
+    color: '#fff',
+    fontSize: SF(15),
+    fontFamily: 'Ubuntu-Medium',
   },
 
 });

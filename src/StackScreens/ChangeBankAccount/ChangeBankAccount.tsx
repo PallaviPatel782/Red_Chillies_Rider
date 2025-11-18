@@ -6,7 +6,6 @@ import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import CustomButton from '../../Components/CustomButton';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../utils/Colors/Colors';
-import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import { Dropdown } from 'react-native-element-dropdown';
 import styles from './styles';
 
@@ -14,28 +13,34 @@ const ChangeBankAccount = ({ navigation }: any) => {
     const [bank, setBank] = useState('');
     const [accountNumber, setAccountNumber] = useState('');
     const [confirmAccountNumber, setConfirmAccountNumber] = useState('');
-    const [ifscCode, setIfscCode] = useState('');
+    const [iban, setIban] = useState('');
 
     const bankOptions = [
-        { label: 'State Bank of India', value: 'SBI' },
-        { label: 'HDFC Bank', value: 'HDFC' },
-        { label: 'ICICI Bank', value: 'ICICI' },
-        { label: 'Axis Bank', value: 'AXIS' },
-        { label: 'Kotak Mahindra Bank', value: 'KOTAK' },
-        { label: 'Punjab National Bank', value: 'PNB' },
+        { label: "Saudi National Bank (SNB)", value: "SNB" },
+        { label: "Al Rajhi Bank", value: "ALRAJHI" },
+        { label: "Riyad Bank", value: "RIYAD" },
+        { label: "Saudi British Bank (SABB)", value: "SABB" },
+        { label: "Arab National Bank", value: "ANB" },
+        { label: "Bank AlJazira", value: "ALJAZIRA" },
+        { label: "Banque Saudi Fransi", value: "BSF" },
+        { label: "Alinma Bank", value: "ALINMA" },
+        { label: "Bank AlBilad", value: "ALBILAD" },
+        { label: "Gulf International Bank", value: "GIB" },
     ];
 
     const handleVerify = () => {
-        navigation.navigate('selfi');
+        navigation.goBack();
     };
 
     return (
         <KeyboardAvoidWrapper bottomComponent={<CustomButton title="Verify" onPress={handleVerify} />}>
+
             <View style={[GlobalStyles.container]}>
                 <Header title="Change Bank Account Details" />
 
                 <Text style={styles.infoText}>
-                    Please fill details of the bank account where you want your earnings.
+                    Please update your bank account details to continue receiving your earnings.
+
                 </Text>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
@@ -46,7 +51,7 @@ const ChangeBankAccount = ({ navigation }: any) => {
                         data={bankOptions}
                         labelField="label"
                         valueField="value"
-                        placeholder="Select bank account"
+                        placeholder="Select bank"
                         selectedTextStyle={styles.selectedTextStyle}
                         placeholderStyle={styles.placeholderStyle}
                         value={bank}
@@ -61,8 +66,8 @@ const ChangeBankAccount = ({ navigation }: any) => {
                         style={GlobalStyles.textInput}
                         placeholder="Enter account number"
                         keyboardType="numeric"
-                        placeholderTextColor={Colors.gray}
                         value={accountNumber}
+                        placeholderTextColor={Colors.gray}
                         onChangeText={setAccountNumber}
                     />
                 </View>
@@ -73,28 +78,29 @@ const ChangeBankAccount = ({ navigation }: any) => {
                     <TextInput
                         style={GlobalStyles.textInput}
                         placeholder="Confirm account number"
-                          placeholderTextColor={Colors.gray}
                         keyboardType="numeric"
                         value={confirmAccountNumber}
+                        placeholderTextColor={Colors.gray}
                         onChangeText={setConfirmAccountNumber}
                     />
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        Bank IFSC Code <FontAwesome name="asterisk" color="red" size={8} />
+                        IBAN Number <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TextInput
                         style={GlobalStyles.textInput}
-                        placeholder="IFSC Code"
+                        placeholder="Enter IBAN (e.g., SA03XXXXXXXXXXXXXXX)"
                         autoCapitalize="characters"
-                          placeholderTextColor={Colors.gray}
-                        value={ifscCode}
-                        onChangeText={setIfscCode}
+                        value={iban}
+                        placeholderTextColor={Colors.gray}
+                        onChangeText={setIban}
                     />
                 </View>
                 <Text style={styles.noteText}>
-                    Bank account can be changed only once in 7 days.
+                    All future earnings will be deposited into your updated bank account.
                 </Text>
+
             </View>
         </KeyboardAvoidWrapper>
     );

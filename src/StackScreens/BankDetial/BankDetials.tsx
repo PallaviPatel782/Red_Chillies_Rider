@@ -6,7 +6,6 @@ import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import CustomButton from '../../Components/CustomButton';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../utils/Colors/Colors';
-import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import { Dropdown } from 'react-native-element-dropdown';
 import styles from './styles';
 
@@ -14,15 +13,19 @@ const BankDetials = ({ navigation }: any) => {
     const [bank, setBank] = useState('');
     const [accountNumber, setAccountNumber] = useState('');
     const [confirmAccountNumber, setConfirmAccountNumber] = useState('');
-    const [ifscCode, setIfscCode] = useState('');
+    const [iban, setIban] = useState('');
 
     const bankOptions = [
-        { label: 'State Bank of India', value: 'SBI' },
-        { label: 'HDFC Bank', value: 'HDFC' },
-        { label: 'ICICI Bank', value: 'ICICI' },
-        { label: 'Axis Bank', value: 'AXIS' },
-        { label: 'Kotak Mahindra Bank', value: 'KOTAK' },
-        { label: 'Punjab National Bank', value: 'PNB' },
+        { label: "Saudi National Bank (SNB)", value: "SNB" },
+        { label: "Al Rajhi Bank", value: "ALRAJHI" },
+        { label: "Riyad Bank", value: "RIYAD" },
+        { label: "Saudi British Bank (SABB)", value: "SABB" },
+        { label: "Arab National Bank", value: "ANB" },
+        { label: "Bank AlJazira", value: "ALJAZIRA" },
+        { label: "Banque Saudi Fransi", value: "BSF" },
+        { label: "Alinma Bank", value: "ALINMA" },
+        { label: "Bank AlBilad", value: "ALBILAD" },
+        { label: "Gulf International Bank", value: "GIB" },
     ];
 
     const handleVerify = () => {
@@ -36,7 +39,7 @@ const BankDetials = ({ navigation }: any) => {
                 <Header title="Bank Account Details" />
 
                 <Text style={styles.infoText}>
-                    Please fill details of the bank account where you want your earnings.
+                    Please fill the details of the bank account where your earnings will be credited.
                 </Text>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
@@ -47,7 +50,7 @@ const BankDetials = ({ navigation }: any) => {
                         data={bankOptions}
                         labelField="label"
                         valueField="value"
-                        placeholder="Select bank account"
+                        placeholder="Select bank"
                         selectedTextStyle={styles.selectedTextStyle}
                         placeholderStyle={styles.placeholderStyle}
                         value={bank}
@@ -82,20 +85,21 @@ const BankDetials = ({ navigation }: any) => {
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        Bank IFSC Code <FontAwesome name="asterisk" color="red" size={8} />
+                        IBAN Number <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TextInput
                         style={GlobalStyles.textInput}
-                        placeholder="IFSC Code"
+                        placeholder="Enter IBAN (e.g., SA03XXXXXXXXXXXXXXX)"
                         autoCapitalize="characters"
+                        value={iban}
                         placeholderTextColor={Colors.gray}
-                        value={ifscCode}
-                        onChangeText={setIfscCode}
+                        onChangeText={setIban}
                     />
                 </View>
                 <Text style={styles.noteText}>
-                    Bank account can be changed only once in 7 days.
+                    All your future payments will be credited to this bank account.
                 </Text>
+
             </View>
         </KeyboardAvoidWrapper>
     );

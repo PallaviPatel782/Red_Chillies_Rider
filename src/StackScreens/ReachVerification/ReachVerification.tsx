@@ -13,6 +13,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../Routing/RootNavigator';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
+import SwipeButton from 'rn-swipe-button';
 
 type ReachVerificationNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -94,7 +95,7 @@ const ReachVerification = () => {
               <Text style={styles.orderIdText}> Order Id: {tripData.orderId}</Text>
             </View>
             <Text style={styles.hotelName}>{tripData.name}</Text>
-            <Text style={styles.addressText}>{tripData.address}</Text>
+            <Text style={styles.addressText}>{tripData.pickup.address}</Text>
 
             <View style={styles.locationRow}>
               <Ionicons name="time-outline" size={SF(14)} color={Colors.dark_green} />
@@ -111,15 +112,64 @@ const ReachVerification = () => {
                 <Text style={styles.mapButtonText}>Map</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.reachedButton} onPress={() => setModalVisible(true)}>
-              <Ionicons name="chevron-forward" size={SF(16)} color={Colors.white} />
-              <Text style={styles.reachedButtonText}>Reached pickup</Text>
-            </TouchableOpacity>
+
+            <View style={{ alignItems: 'center', marginTop: SH(15), flex: 1 }}>
+              <SwipeButton
+                containerStyles={{
+                  borderRadius: SW(40),
+                  overflow: 'hidden',
+                }}
+                height={SH(45)}
+                width={SW(350)}
+                title="Reached pickup"
+                titleStyles={{
+                  color: '#fff',
+                  fontSize: SF(14),
+                  fontFamily: 'Ubuntu-Medium',
+                  letterSpacing: 0.5,
+                }}
+                railBackgroundColor={Colors.dark_green}
+                railFillBackgroundColor={Colors.dark_green}
+                railBorderColor="transparent"
+                railFillBorderColor="transparent"
+                thumbIconBackgroundColor="#fff"
+                thumbIconBorderColor="transparent"
+                thumbIconStyles={{
+                  width: SW(25),
+                  height: SH(25),
+                  borderRadius: SW(25),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  elevation: 4,
+                }}
+                thumbIconComponent={() => (
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Ionicons
+                      name="chevron-forward"
+                      size={SF(14)}
+                      color={Colors.dark_green}
+                    />
+                    <Ionicons
+                      name="chevron-forward"
+                      size={SF(14)}
+                      color={Colors.dark_green}
+                      style={{ marginLeft: -5 }}
+                    />
+                  </View>
+                )}
+                onSwipeSuccess={() => {
+                  setModalVisible(true);
+                }}
+                shouldResetAfterSuccess={false}
+              />
+            </View>
           </View>
         ) : (
           <Text style={{ textAlign: 'center', marginTop: SH(20) }}>No trip data found.</Text>
         )}
       </View>
+
+      <Image source={require('../../assests/Images/ReachVerification.png')} style={styles.image} />
 
       <Modal
         visible={isModalVisible}
@@ -164,6 +214,7 @@ const ReachVerification = () => {
                     <Text style={styles.orderText}>Customer: {tripData.customerName}</Text>
                   </View>
                 </View>
+
                 <TouchableOpacity
                   style={styles.modalButton}
                   onPress={() => {

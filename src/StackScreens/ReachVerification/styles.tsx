@@ -119,11 +119,16 @@ export default StyleSheet.create({
     fontFamily: 'Ubuntu-Medium',
     fontSize: SF(14),
     marginLeft: SW(4),
+    resizeMode:"contain"
   },
-
-  /** -------------------------
-   *  🔹 MODAL STYLES BELOW 🔹
-   * ------------------------- */
+  image: {
+  width: SW(200),
+  height: SH(200),
+  position: "absolute",
+  bottom: SH(10),
+  alignSelf: "center",
+  resizeMode: "contain",
+},
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',

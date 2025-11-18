@@ -29,14 +29,16 @@ import CannotDeliverHelpCenter from '../StackScreens/HelpCenter/CannotDeliverHel
 import WithdrawScreen from '../StackScreens/Withdraw/WithdrawScreen';
 import WithdrawSucessfully from '../StackScreens/WithdrawSucessfully/WithdrawSucessfully';
 import PocketStatement from '../StackScreens/PocketStatement/PocketStatement';
-import AllTrips from '../StackScreens/AllTrips/AllTrips';
 import PayoutScreen from '../StackScreens/PayoutScreen/PayoutScreen';
 import ReachVerification from '../StackScreens/ReachVerification/ReachVerification';
 import PickOrder from '../StackScreens/PickOrder/PickOrder';
 import DropOrder from '../StackScreens/DropOrder/DropOrder';
-import PaidOnline from '../StackScreens/PaidOnline/PaidOnline';
 import CashOnDelivery from '../StackScreens/CashOnDelivery/CashOnDelivery';
 import DeliveryComplete from '../StackScreens/DeliveryComplete/DeliveryComplete';
+import PastTrips from '../StackScreens/PastTrips/PastTrips';
+import ChatScreen from '../StackScreens/ChatScreen/ChatScreen';
+import TripHistory from '../StackScreens/TripHistory/TripHistory';
+import LiveOrderHelp from '../StackScreens/HelpCenter/LiveOrderHelp/LiveOrderHelp';
 
 export type RootStackParamList = {
     Splash: undefined;
@@ -54,18 +56,20 @@ export type RootStackParamList = {
     ReportIssue: undefined;
     YourProfile: undefined;
     HelpCenter: undefined;
+    LiveOrderHelp: undefined;
     HelpCenterDenyOrder: undefined;
     CannotDeliverHelpCenter: undefined;
     WithdrawScreen: undefined;
     WithdrawSucessfully: undefined;
     PocketStatement: undefined;
-    AllTrips: undefined;
+    PastTrips: undefined;
     PayoutScreen: undefined;
     ReachVerification: { tripData: any };
     PickOrder: { tripData: any };
     DropOrder: { tripData: any };
-    PaidOnline: { tripData: any };
+    ChatScreen: undefined;
     CashOnDelivery: { tripData: any };
+    TripHistory: undefined;
     DeliveryComplete: { tripData: any };
 };
 
@@ -171,10 +175,12 @@ const RootNavigator: React.FC = () => {
                 <Stack.Screen name="ReachVerification" component={ReachVerification} />
                 <Stack.Screen name="PickOrder" component={PickOrder} />
                 <Stack.Screen name="DropOrder" component={DropOrder} />
-                <Stack.Screen name="PaidOnline" component={PaidOnline} />
                 <Stack.Screen name="CashOnDelivery" component={CashOnDelivery} />
                 <Stack.Screen name="DeliveryComplete" component={DeliveryComplete} />
-                <Stack.Screen name="AllTrips" component={AllTrips} />
+                <Stack.Screen name="PastTrips" component={PastTrips} />
+                <Stack.Screen name="TripHistory" component={TripHistory} />
+                <Stack.Screen name="ChatScreen" component={ChatScreen} />
+                <Stack.Screen name="LiveOrderHelp" component={LiveOrderHelp} />
                 <Stack.Screen name="YourProfile" component={YourProfile} />
                 <Stack.Screen name="MainTabs" component={MainTabs} />
             </Stack.Navigator>

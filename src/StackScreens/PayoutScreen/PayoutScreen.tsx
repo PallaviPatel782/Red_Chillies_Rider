@@ -80,7 +80,7 @@ const WeeklyTab = () => (
                             color: processColor('#3874FF'),
                             valueTextColor: processColor('#000'),
                             valueTextSize: 10,
-                            valueFormatter: '₹ #',
+                            valueFormatter: '# SAR',
                         },
                     },
                 ],
@@ -158,8 +158,8 @@ const MonthlyTab = () => (
                                 processColor('#26662F'),
                             ],
                             valueTextColor: processColor('#000'),
-                            valueTextSize: 10,
-                            valueFormatter: '₹ #.##',
+                            valueTextSize: 9,
+                            valueFormatter: '#.## SAR',
                             drawValues: true,
                         },
                     },
@@ -178,8 +178,8 @@ const MonthlyTab = () => (
                 position: 'BOTTOM',
                 granularityEnabled: true,
                 granularity: 1,
-                axisMaximum: 6.5,
-                axisMinimum: -0.5,
+                axisMaximum: 6.6, // ✅ little more room on right
+                axisMinimum: -0.4, // ✅ little more room on left
                 drawGridLines: false,
                 textSize: 9,
                 textColor: processColor('#8E8E8E'),
@@ -187,7 +187,10 @@ const MonthlyTab = () => (
                 labelRotationAngle: 0,
             }}
             yAxis={{
-                left: { enabled: false },
+                left: {
+                    enabled: false,
+                    axisMaximum: 900, // ✅ prevents top cut
+                },
                 right: { enabled: false },
             }}
             animation={{ durationX: 1000 }}
@@ -195,6 +198,8 @@ const MonthlyTab = () => (
             legend={{ enabled: false }}
             drawValueAboveBar={true}
         />
+
+
 
         <PerformanceFooter period="this month" trips="121" hours="125 hrs" orders="121" />
     </ScrollView>

@@ -10,12 +10,12 @@ const HelpCenter = ({ navigation }: any) => {
     return (
         <KeyboardAvoidWrapper>
             <View style={GlobalStyles.container}>
-                <Header title={'Help Center'} />
+                <Header title={''} />
 
                 <View style={styles.innerContainer}>
                     <View style={styles.titleContainer}>
                         <View style={styles.redLine} />
-                        <Text style={styles.titleText}>Help Center</Text>
+                        <Text style={styles.titleText}>How can we help</Text>
                     </View>
                     <TouchableOpacity
                         style={styles.listItem}

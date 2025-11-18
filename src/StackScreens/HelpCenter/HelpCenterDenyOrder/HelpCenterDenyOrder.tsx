@@ -107,6 +107,12 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
             </View>
 
             <View style={styles.infoBox}>
+              <Text style={styles.infoText1}>
+                If you cancel the ride, you won’t be able to get another one for 30 minutes.
+              </Text>
+            </View>
+
+            <View style={styles.Box}>
               <View style={styles.infoHeader}>
                 <MaterialCommunityIcons
                   name="help-circle-outline"

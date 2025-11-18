@@ -9,18 +9,16 @@ export const deliveryData = [
     paymentMode: 'Cash on Delivery',
     pickup: {
       label: 'Pickup From',
-      distance: '1.73 km',
+      address: 'Plot 5, Krishna Nagar, Sector 20, Near Omkar Building, Chinchwad, Pune.',
       latitude: 18.6275,
       longitude: 73.8001,
     },
     drop: {
       label: 'Drop To',
-      distance: '1.27 km',
+      address: 'Flat 12, Sai Residency, Aundh Road, Pune.',
       latitude: 18.6349,
       longitude: 73.8125,
     },
-    address:
-      'Plot 5, Krishna Nagar, Sector 20, Near Omkar Building, Chinchwad, Pune.',
     contact: '9893451098',
     orderItems: [
       { itemName: 'Paneer Butter Masala', quantity: 1, price: 180, type: 'veg' },
@@ -36,20 +34,19 @@ export const deliveryData = [
     customerName: 'Aditi Verma',
     expectedEarnings: 20.0,
     timer: '25.30',
-    paymentMode: 'Online Payment',
+    paymentMode: 'Cash on Delivery',
     pickup: {
       label: 'Pickup From',
-      distance: '2.00 km',
+      address: 'Shop 10, Balina Apartment, Sector 29, Ravet, Pune.',
       latitude: 18.6501,
       longitude: 73.7802,
     },
     drop: {
       label: 'Drop To',
-      distance: '1.27 km',
+      address: 'B-102, Akash Residency, Nigdi, Pune.',
       latitude: 18.6633,
       longitude: 73.7911,
     },
-    address: 'Shop 10, Balina Apartment, Sector 29, Ravet, Pune.',
     contact: '9893451091',
     orderItems: [
       { itemName: 'Pav Bhaji', quantity: 2, price: 180, type: 'veg' },
@@ -64,20 +61,19 @@ export const deliveryData = [
     customerName: 'Arjun Mehta',
     expectedEarnings: 25.0,
     timer: '28.45',
-    paymentMode: 'Online Payment',
+    paymentMode: 'Cash on Delivery',
     pickup: {
       label: 'Pickup From',
-      distance: '2.4 km',
+      address: 'Shop 22, Green Plaza, Baner, Pune.',
       latitude: 18.5577,
       longitude: 73.8079,
     },
     drop: {
       label: 'Drop To',
-      distance: '1.9 km',
+      address: 'Flat 5, Kunal Icon, Baner Pashan Link Road, Pune.',
       latitude: 18.5623,
       longitude: 73.8225,
     },
-    address: 'Shop 22, Green Plaza, Baner, Pune.',
     contact: '9893476543',
     orderItems: [
       { itemName: 'Chicken Biryani', quantity: 1, price: 220, type: 'non-veg' },
@@ -96,17 +92,16 @@ export const deliveryData = [
     paymentMode: 'Cash on Delivery',
     pickup: {
       label: 'Pickup From',
-      distance: '3.1 km',
+      address: 'Plot 8, Blue Heaven Complex, Pimple Saudagar, Pune.',
       latitude: 18.5921,
       longitude: 73.7866,
     },
     drop: {
       label: 'Drop To',
-      distance: '2.4 km',
+      address: 'Flat 10, Paradise Towers, Rahatani, Pune.',
       latitude: 18.6033,
       longitude: 73.7922,
     },
-    address: 'Plot 8, Blue Heaven Complex, Pimple Saudagar, Pune.',
     contact: '9893488822',
     orderItems: [
       { itemName: 'Grilled Fish with Lemon Butter', quantity: 1, price: 320, type: 'non-veg' },

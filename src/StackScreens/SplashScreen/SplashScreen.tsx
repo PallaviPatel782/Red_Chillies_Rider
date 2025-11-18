@@ -52,7 +52,7 @@ const SplashScreen = ({ navigation }: any) => {
             <Text style={{ fontSize: SF(15), color: '#000', fontFamily: "Ubuntu-Regular",margin:7 }}>+966</Text>
             <TextInput
               style={[GlobalStyles.textInput, { flex: 1 }]}
-              placeholder="5xxxxxxxx"
+              placeholder="Enter Phone Number"
               placeholderTextColor="#999"
               keyboardType="phone-pad"
               value={contact}

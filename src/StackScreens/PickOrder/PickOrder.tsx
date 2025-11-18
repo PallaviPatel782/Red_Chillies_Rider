@@ -8,7 +8,8 @@ import Colors from '../../utils/Colors/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../Routing/RootNavigator';
-import { SH,SW,SF } from '../../utils/Responsiveness/Dimensions';
+import { SH, SW, SF } from '../../utils/Responsiveness/Dimensions';
+import SwipeButton from 'rn-swipe-button';
 
 type PickOrderRouteProp = RouteProp<RootStackParamList, 'PickOrder'>;
 
@@ -16,6 +17,7 @@ const PickOrder = () => {
   const navigation = useNavigation<any>();
   const route = useRoute<PickOrderRouteProp>();
   const { tripData } = route.params;
+  const currencySymbol = 'SAR';
 
   const [timeLeft, setTimeLeft] = useState(() => {
     const parts = tripData?.timer?.split('.') || ['0', '0'];
@@ -112,7 +114,7 @@ const PickOrder = () => {
                     ? `${item.quantity} × ${item.itemName}`
                     : item.itemName}
                 </Text>
-                <Text style={styles.itemPrice}>₹{item.price.toFixed(2)}</Text>
+                <Text style={styles.itemPrice}>{item.price.toFixed(2)} {currencySymbol}</Text>
               </View>
             )}
           />
@@ -125,52 +127,78 @@ const PickOrder = () => {
               <View
                 style={[
                   styles.paidTagBox,
-                  tripData.paymentMode === 'Online Payment'
-                    ? { backgroundColor: '#E6F8ED', borderColor: Colors.green }
-                    : { backgroundColor: '#FFF4E1', borderColor: '#FFB84E' },
+                  { backgroundColor: '#FFF4E1', borderColor: '#FFB84E' },
                 ]}
               >
                 <Ionicons
-                  name={
-                    tripData.paymentMode === 'Online Payment'
-                      ? 'checkmark-done-circle-outline'
-                      : 'cash-outline'
-                  }
+                  name="cash-outline"
                   size={14}
-                  color={
-                    tripData.paymentMode === 'Online Payment'
-                      ? Colors.green
-                      : '#FF9F1C'
-                  }
+                  color="#FF9F1C"
                   style={{ marginRight: SW(4) }}
                 />
-                <Text
-                  style={[
-                    styles.paidTagText,
-                    tripData.paymentMode === 'Online Payment'
-                      ? { color: Colors.green }
-                      : { color: '#FF9F1C' },
-                  ]}
-                >
-                  {tripData.paymentMode === 'Online Payment' ? 'PAID' : 'CASH'}
-                </Text>
+                <Text style={[styles.paidTagText, { color: '#FF9F1C' }]}>CASH</Text>
               </View>
+
             </View>
 
-            <Text style={styles.totalAmount}>₹{totalAmount.toFixed(2)}</Text>
+            <Text style={styles.totalAmount}>{totalAmount.toFixed(2)} {currencySymbol} </Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.pickButton}
-          onPress={() => navigation.navigate('DropOrder', { tripData })}
-        >
-          <Ionicons
-            name="chevron-forward-outline"
-            size={20}
-            color={Colors.white}
+        <View style={{ alignItems: 'center', marginTop: SH(15), flex: 1 }}>
+          <SwipeButton
+            containerStyles={{
+              borderRadius: SW(40),
+              overflow: 'hidden',
+            }}
+            height={SH(45)}
+            width={SW(350)}
+            title="Picked order"
+            titleStyles={{
+              color: '#fff',
+              fontSize: SF(14),
+              fontFamily: 'Ubuntu-Medium',
+              letterSpacing: 0.5,
+            }}
+            railBackgroundColor={Colors.dark_green}
+            railFillBackgroundColor={Colors.dark_green}
+            railBorderColor="transparent"
+            railFillBorderColor="transparent"
+            thumbIconBackgroundColor="#fff"
+            thumbIconBorderColor="transparent"
+            thumbIconStyles={{
+              width: SW(25),
+              height: SH(25),
+              borderRadius: SW(25),
+              justifyContent: 'center',
+              alignItems: 'center',
+              elevation: 4,
+            }}
+            thumbIconComponent={() => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Ionicons
+                  name="chevron-forward"
+                  size={SF(14)}
+                  color={Colors.dark_green}
+                />
+                <Ionicons
+                  name="chevron-forward"
+                  size={SF(14)}
+                  color={Colors.dark_green}
+                  style={{ marginLeft: -5 }}
+                />
+              </View>
+            )}
+            onSwipeSuccess={() => {
+              navigation.navigate('DropOrder', { tripData });
+            }}
+            shouldResetAfterSuccess={false}
           />
-          <Text style={styles.pickButtonText}>Picked order</Text>
-        </TouchableOpacity>
+        </View>
+        <Image
+          source={require('../../assests/Images/PickOrder.png')}
+          style={styles.image}
+        />
+
       </View>
     </KeyboardAvoidWrapper>
   );

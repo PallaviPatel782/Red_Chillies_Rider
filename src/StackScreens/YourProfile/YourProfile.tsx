@@ -36,7 +36,7 @@ const YourProfile: React.FC = () => {
     const navigation = useNavigation<NavigationProp>();
 
     const [name, setName] = useState('Samruddhi Bansod');
-    const [mobile, setMobile] = useState('+91-1234567890');
+    const [mobile, setMobile] = useState('+966-512345678');
     const [workCity, setWorkCity] = useState('');
     const [workArea, setWorkArea] = useState('');
     const [vehicle, setVehicle] = useState<string | null>(null);

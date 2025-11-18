@@ -5,7 +5,7 @@ import styles from './styles';
 
 const DeliveryComplete = ({ route, navigation }: any) => {
   const { tripData } = route.params || {};
-
+  const currencySymbol = 'SAR';
   useEffect(() => {
     console.log('Trip data received:', tripData);
   }, [tripData]);
@@ -36,7 +36,7 @@ const DeliveryComplete = ({ route, navigation }: any) => {
           <Text style={styles.confirmationText}>Great job! Delivery complete</Text>
           <Text style={styles.earningsLabel}>Trip earnings</Text>
           <Text style={styles.earningsValue}>
-            ₹{tripData?.expectedEarnings ?? '0.00'}
+            {tripData?.expectedEarnings ?? '0.00'}  {currencySymbol}
           </Text>
         </View>
         <View style={styles.ContentContainer}>
@@ -45,13 +45,13 @@ const DeliveryComplete = ({ route, navigation }: any) => {
             <View style={styles.rowBetween}>
               <Text style={styles.detailsLabel}>Trip pay</Text>
               <Text style={styles.detailsValue}>
-                ₹{tripData?.expectedEarnings ?? '0.00'}
+                {tripData?.expectedEarnings ?? '0.00'}  {currencySymbol}
               </Text>
             </View>
             <View style={styles.rowBetween}>
               <Text style={styles.detailsLabel}>Total bill</Text>
               <Text style={styles.detailsValue}>
-                ₹{totalAmount?.toFixed(2) ?? '0.00'}
+                {totalAmount?.toFixed(2) ?? '0.00'}  {currencySymbol}
               </Text>
             </View>
           </View>

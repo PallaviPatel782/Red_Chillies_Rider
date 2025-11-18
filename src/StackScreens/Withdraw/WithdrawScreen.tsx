@@ -9,6 +9,7 @@ import Colors from '../../utils/Colors/Colors';
 const WithdrawScreen = ({ navigation }: any) => {
   const [amount, setAmount] = useState('');
   const withdrawableAmount = 1816.55;
+  const currencySymbol = "SAR"; 
 
   const handleWithdraw = () => {
     if (!amount || parseFloat(amount) <= 0) return;
@@ -19,23 +20,24 @@ const WithdrawScreen = ({ navigation }: any) => {
 
   return (
     <KeyboardAvoidWrapper
-    bottomComponent={
-         <View style={styles.noteBox}>
-          <Text style={styles.noteItem}>• Maximum withdrawal limit is ₹2000</Text>
+      bottomComponent={
+        <View style={styles.noteBox}>
+          <Text style={styles.noteItem}>• Maximum withdrawal limit is 2000 {currencySymbol}</Text>
           <Text style={styles.noteItem}>• You can withdraw only 1 time in a day</Text>
         </View>
-    }
+      }
     >
       <View style={[GlobalStyles.container, { paddingHorizontal: 16 }]}>
         <Header title="Add to bank account" />
         <View style={styles.withdrawCard}>
           <Text style={styles.withdrawTitle}>Withdrawable amount</Text>
-          <Text style={styles.withdrawValue}>₹{displayAmount.toFixed(2)}</Text>
+          <Text style={styles.withdrawValue}>
+            {displayAmount.toFixed(2)} {currencySymbol}
+          </Text>
         </View>
         <View style={styles.amountSection}>
           <Text style={styles.amountLabel}>Enter amount</Text>
           <View style={styles.inputContainer}>
-            <Text style={styles.rupeeSymbol}>₹</Text>
             <TextInput
               style={styles.amountInput}
               placeholder="0"
@@ -43,6 +45,7 @@ const WithdrawScreen = ({ navigation }: any) => {
               value={amount}
               onChangeText={setAmount}
             />
+              <Text style={styles.rupeeSymbol}>{currencySymbol}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -51,7 +54,8 @@ const WithdrawScreen = ({ navigation }: any) => {
             { backgroundColor: amount ? Colors.red : '#f3b9b9' },
           ]}
           onPress={handleWithdraw}
-          disabled={!amount}>
+          disabled={!amount}
+        >
           <Text style={styles.withdrawText}>Withdraw</Text>
         </TouchableOpacity>
       </View>

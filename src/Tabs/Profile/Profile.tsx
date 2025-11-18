@@ -9,6 +9,7 @@ import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Routing/RootNavigator';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Profile = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -35,10 +36,11 @@ const Profile = () => {
           </TouchableOpacity>
 
           <View style={styles.bankDetailsBox}>
-            <Text style={styles.bankText}>Bank : Union Bank Of India</Text>
+            <Text style={styles.bankText}>Bank : Saudi National Bank (SNB)</Text>
             <Text style={styles.bankText}>Account Number : 1234567890</Text>
-            <Text style={styles.bankText}>Bank IFSC code : 1234567890</Text>
+            <Text style={styles.bankText}>IBAN : SA03 0000 0000 0000 0000 0000</Text>
           </View>
+
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Support</Text>
 
@@ -52,6 +54,18 @@ const Profile = () => {
               </View>
               <Icon name="chevron-forward" size={20} color="#999" />
             </TouchableOpacity>
+
+            {/* <TouchableOpacity
+              style={styles.listItem}
+              onPress={() => navigation.navigate('PastTrips')}
+            >
+              <View style={styles.iconRow}>
+                <MaterialCommunityIcons name="scooter" size={20} color="#555" />
+                <Text style={styles.listText}>Past Trips</Text>
+              </View>
+              <Icon name="chevron-forward" size={20} color="#999" />
+            </TouchableOpacity> */}
+
 
             <TouchableOpacity
               style={styles.listItem}

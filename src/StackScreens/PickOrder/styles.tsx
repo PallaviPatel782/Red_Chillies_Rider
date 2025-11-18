@@ -124,4 +124,12 @@ export default StyleSheet.create({
     fontSize: SF(15),
     marginLeft: SW(4),
   },
+  image: {
+    width: SW(150),
+    height: SH(200),
+    position: "absolute",
+    bottom: SH(10),
+    alignSelf: "center",
+    resizeMode: "contain",
+  },
 });

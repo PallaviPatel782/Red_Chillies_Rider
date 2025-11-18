@@ -1,27 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ShiftState {
+interface StatusState {
   status: 'Online' | 'Offline' | 'On break';
-  shift: string | null;
 }
 
-const initialState: ShiftState = {
+const initialState: StatusState = {
   status: 'Offline',
-  shift: null,
 };
 
 const statusSlice = createSlice({
   name: 'status',
   initialState,
   reducers: {
-    setStatus: (state: ShiftState, action: PayloadAction<ShiftState['status']>) => {
+    setStatus: (state, action: PayloadAction<StatusState['status']>) => {
       state.status = action.payload;
-    },
-    setShift: (state: ShiftState, action: PayloadAction<string | null>) => {
-      state.shift = action.payload;
     },
   },
 });
 
-export const { setStatus, setShift } = statusSlice.actions;
+export const { setStatus } = statusSlice.actions;
 export default statusSlice.reducer;

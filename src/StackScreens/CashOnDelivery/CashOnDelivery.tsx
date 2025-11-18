@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, Modal, TouchableWithoutFeedback, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Modal,
+  TouchableWithoutFeedback,
+  FlatList,
+  Linking,
+  Alert,
+  TextInput,
+} from 'react-native';
 import Header from '../../Components/Header';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Colors from '../../utils/Colors/Colors';
 import styles from './styles';
-import { SW, SH } from '../../utils/Responsiveness/Dimensions';
+import { SW, SH, SF } from '../../utils/Responsiveness/Dimensions';
+import SwipeButton from 'rn-swipe-button';
 
 const CashOnDelivery = ({ route, navigation }: any) => {
   const { tripData } = route.params || {};
   const amount = tripData?.amount || 970;
+  const currencySymbol = 'SAR';
+
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
 
   const totalAmount = tripData?.orderItems?.reduce(
     (sum: number, item: any) => sum + item.price,
@@ -30,46 +47,51 @@ const CashOnDelivery = ({ route, navigation }: any) => {
     />
   );
 
+  const handleCall = () => {
+    if (tripData?.contact) {
+      Linking.openURL(`tel:${tripData.contact}`);
+    } else {
+      Alert.alert('No phone number available');
+    }
+  };
+
+  const handleOtpVerify = () => {
+    setShowOtpModal(false);
+    navigation.navigate('DeliveryComplete', { tripData });
+  };
+
   return (
     <KeyboardAvoidWrapper>
       <View style={GlobalStyles.container}>
         <Header title="Deliver" />
-        <View style={styles.collectBox}>
-          <Ionicons name="qr-code-outline" size={22} color={Colors.dark_green} />
-          <Text style={styles.collectText}>Collect ₹{amount} via UPI</Text>
-        </View>
-        <View style={styles.qrBox}>
-          <Image
-            source={require('../../assests/Images/qr_placeholder.png')}
-            style={styles.qrImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.orText}>OR</Text>
-          <Text style={styles.cashCollectText}>Collect Cash: ₹{amount}</Text>
-        </View>
         <View style={styles.paymentRow}>
           <Ionicons name="checkmark-circle-outline" size={30} color={Colors.dark_green} />
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.paymentTitle}>Collect Cash ₹{amount}</Text>
+            <Text style={styles.paymentTitle}>
+              Collect Cash {amount} {currencySymbol}
+            </Text>
             <Text style={styles.paymentOrderId}>Order Id: {tripData?.orderId}</Text>
           </View>
         </View>
+
         <View style={styles.divider} />
+
+        {/* Customer Row */}
         <View style={styles.customerRow}>
           <Ionicons name="person-circle-outline" size={26} color={'#BFBFBF'} />
           <Text style={styles.customerName}>{tripData?.customerName}</Text>
+
           <View style={{ flex: 1 }} />
-          <View style={styles.callIconCircle}>
-            <Ionicons name="call-outline" size={20} color={"#0788E4"} />
-          </View>
+          <TouchableOpacity style={styles.callIconCircle} onPress={handleCall}>
+            <Ionicons name="call-outline" size={16} color={'#0788E4'} />
+          </TouchableOpacity>
         </View>
-        <Text style={styles.customerAddress}>{tripData?.address}</Text>
+
+        <Text style={styles.customerAddress}>{tripData?.drop?.address}</Text>
         <Text style={styles.customerOrderId}>Order Id: {tripData?.orderId}</Text>
-        <TouchableOpacity
-          style={styles.orderBox}
-          onPress={() => setShowOrderModal(true)}
-          activeOpacity={0.7}
-        >
+
+        {/* Order Detail Box */}
+        <TouchableOpacity style={styles.orderBox} onPress={() => setShowOrderModal(true)}>
           <View style={styles.orderHeader}>
             <Ionicons name="document-text-outline" size={16} color={Colors.black} />
             <Text style={styles.orderTitle}>Order Details</Text>
@@ -78,10 +100,71 @@ const CashOnDelivery = ({ route, navigation }: any) => {
           </View>
           <Text style={styles.restaurantName}>{tripData?.name}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.deliverButton} onPress={()=>navigation.navigate('DeliveryComplete', { tripData })}>
-          <Ionicons name="chevron-forward-outline" size={18} color={Colors.white} />
-          <Text style={styles.deliverButtonText}>Order delivered</Text>
-        </TouchableOpacity>
+
+        <View style={{ alignItems: 'center', marginTop: SH(15), flex: 1 }}>
+          <SwipeButton
+            containerStyles={{ borderRadius: SW(40), overflow: 'hidden' }}
+            height={SH(45)}
+            width={SW(350)}
+            title="Order Delivered"
+            titleStyles={{
+              color: '#fff',
+              fontSize: SF(14),
+              fontFamily: 'Ubuntu-Medium',
+            }}
+            railBackgroundColor={Colors.dark_green}
+            railFillBackgroundColor={Colors.dark_green}
+            railBorderColor="transparent"
+            thumbIconBackgroundColor="#fff"
+            thumbIconBorderColor="transparent"
+            thumbIconComponent={() => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Ionicons name="chevron-forward" size={14} color={Colors.dark_green} />
+                <Ionicons
+                  name="chevron-forward"
+                  size={14}
+                  color={Colors.dark_green}
+                  style={{ marginLeft: -5 }}
+                />
+              </View>
+            )}
+            onSwipeSuccess={() => setShowOtpModal(true)}
+            shouldResetAfterSuccess={true}
+          />
+        </View>
+        <Image source={require('../../assests/Images/CashOnDelivery.png')} style={styles.image} />
+        <Modal visible={showOtpModal} transparent animationType="fade">
+          <View style={styles.otpOverlay}>
+            <View style={styles.otpCard}>
+              <Ionicons name="shield-checkmark-outline" size={50} color={Colors.dark_green} />
+
+              <Text style={styles.otpTitle}>Enter Delivery OTP</Text>
+              <Text style={styles.otpSubtitle}>Customer will share a 4-digit OTP</Text>
+
+              <TextInput
+                value={otp}
+                onChangeText={(t) => {
+                  setOtp(t);
+                  setError('');
+                }}
+                keyboardType="number-pad"
+                maxLength={4}
+                placeholder="Enter OTP"
+                style={styles.otpInput}
+              />
+
+              {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+              <TouchableOpacity style={styles.verifyBtn} onPress={handleOtpVerify}>
+                <Text style={styles.verifyBtnText}>Verify & Complete Delivery</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setShowOtpModal(false)}>
+                <Text style={styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <Modal
           visible={showOrderModal}
           animationType="slide"
@@ -98,7 +181,6 @@ const CashOnDelivery = ({ route, navigation }: any) => {
                       <Ionicons name="close-outline" size={24} color={Colors.black} />
                     </TouchableOpacity>
                   </View>
-
                   <View style={styles.orderCard}>
                     <Ionicons
                       name="document-text-outline"
@@ -106,9 +188,11 @@ const CashOnDelivery = ({ route, navigation }: any) => {
                       color={Colors.red}
                       style={styles.orderIcon}
                     />
+
                     <Text style={styles.orderId}>Order ID: {tripData.orderId}</Text>
 
                     <View style={styles.divider} />
+
                     <FlatList
                       data={tripData.orderItems}
                       scrollEnabled={false}
@@ -121,7 +205,9 @@ const CashOnDelivery = ({ route, navigation }: any) => {
                               ? `${item.quantity} × ${item.itemName}`
                               : item.itemName}
                           </Text>
-                          <Text style={styles.itemPrice}>₹{item.price.toFixed(2)}</Text>
+                          <Text style={styles.itemPrice}>
+                            {item.price.toFixed(2)} {currencySymbol}
+                          </Text>
                         </View>
                       )}
                     />
@@ -130,7 +216,6 @@ const CashOnDelivery = ({ route, navigation }: any) => {
                     <View style={styles.totalRow}>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={styles.totalText}>Total bill</Text>
-
                         <View
                           style={[
                             styles.paidTagBox,
@@ -152,7 +237,9 @@ const CashOnDelivery = ({ route, navigation }: any) => {
                         </View>
                       </View>
 
-                      <Text style={styles.totalAmount}>₹{totalAmount.toFixed(2)}</Text>
+                      <Text style={styles.totalAmount}>
+                        {totalAmount.toFixed(2)} {currencySymbol}
+                      </Text>
                     </View>
                   </View>
                 </View>

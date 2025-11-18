@@ -40,10 +40,9 @@ export default StyleSheet.create({
     buttonContainer: {
         position: 'absolute',
         bottom: SH(20),
-         alignSelf: "center",
+        alignSelf: "center",
         width: '100%',
         alignItems: 'center',
-        paddingHorizontal: SW(20),
     },
     denyBtnOutline: {
         width: '100%',
@@ -116,13 +115,17 @@ export default StyleSheet.create({
     modalLabel: {
         fontFamily: 'Ubuntu-Medium',
         color: Colors.black,
-         fontSize: SF(12),
+        fontSize: SF(12),
+    },
+    Box: {
+        paddingVertical: SW(8),
+        marginBottom: SH(10),
     },
     infoBox: {
         backgroundColor: '#FFF5F5',
         borderRadius: 8,
         padding: SW(12),
-        marginBottom: SH(20),
+        marginBottom: SH(10),
     },
     infoHeader: {
         flexDirection: 'row',
@@ -173,6 +176,11 @@ export default StyleSheet.create({
         fontSize: SF(15),
         fontFamily: 'Ubuntu-Medium',
     },
+    infoText1: {
+        color: Colors.red,
+        fontFamily: 'Ubuntu-Regular',
+        fontSize: SF(12),
+    }
 
 
 });

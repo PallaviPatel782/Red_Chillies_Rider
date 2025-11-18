@@ -16,7 +16,7 @@ const Pocket = () => {
         <StatusShiftModal />
         <View style={styles.earningCard}>
           <Text style={styles.earningPeriod}>Earnings: 26 May - 14 Oct</Text>
-          <Text style={styles.earningAmount}>₹2984.55</Text>
+          <Text style={styles.earningAmount}>2894 SAR</Text>
         </View>
         <View style={styles.sectionDivider}>
           <View style={styles.line} />
@@ -26,11 +26,11 @@ const Pocket = () => {
         <View style={styles.balanceBox}>
           <View style={styles.balanceRow}>
             <Text style={styles.balanceLabel}>Pocket balance</Text>
-            <Text style={styles.balanceValue}>₹1816.55</Text>
+            <Text style={styles.balanceValue}>1816.55 SAR</Text>
           </View>
           <View style={styles.balanceRow}>
             <Text style={styles.balanceLabel}>Available cash limit</Text>
-            <Text style={styles.balanceValue}>₹1816.55</Text>
+            <Text style={styles.balanceValue}>1816.55 SAR</Text>
           </View>
         </View>
         <TouchableOpacity

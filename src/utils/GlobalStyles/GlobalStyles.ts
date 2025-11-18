@@ -7,7 +7,6 @@ const GlobalStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     paddingHorizontal: SW(15),
-    paddingTop: SH(10),
   },
   textInputContainer: {
     width: '100%',

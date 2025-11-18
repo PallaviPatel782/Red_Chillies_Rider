@@ -18,6 +18,7 @@ const WithdrawSuccessfully = () => {
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
     const { amount } = route.params || {};
+    const currencySymbol = 'SAR';
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -32,7 +33,8 @@ const WithdrawSuccessfully = () => {
                 />
 
                 <Text style={styles.title}>Successfully withdrawn</Text>
-                <Text style={styles.amount}>₹{amount}</Text>
+                <Text style={styles.amount}>{amount} {currencySymbol}</Text>
+
 
                 <View style={{ width: '100%', position: 'absolute', bottom: SH(1) }}>
                     <CustomButton title="Okay" onPress={() => setShowModal(true)} />
@@ -46,7 +48,8 @@ const WithdrawSuccessfully = () => {
                         <View style={styles.modalOverlay}>
                             <TouchableWithoutFeedback>
                                 <View style={styles.modalContainer}>
-                                    <Text style={styles.modalAmount}>₹{amount}</Text>
+                                    <Text style={styles.amount}>{currencySymbol}{amount}</Text>
+
                                     <Text style={styles.modalTitle}>Pocket withdrawal successful</Text>
 
                                     <View style={styles.detailBox}>
