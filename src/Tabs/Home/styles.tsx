@@ -51,9 +51,9 @@ export default StyleSheet.create({
   },
   inProgressText: {
     color: '#41495C',
-    fontSize: SF(12),
+    fontSize: SF(13),
     fontFamily: 'Ubuntu-Regular',
-    padding: SW(2)
+    padding: SW(2),
   },
   shiftTime: {
     fontSize: SF(13),

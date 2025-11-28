@@ -6,13 +6,15 @@ import KeyboardAvoidWrapper from '../../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../../utils/GlobalStyles/GlobalStyles';
 import styles from './styles';
 import Colors from '../../../utils/Colors/Colors';
+import { useTranslation } from 'react-i18next';
 
 const LiveOrderHelp = ({ navigation, route }: any) => {
+    const { t } = useTranslation();
     const { tripData } = route.params;
     const [showWaitModal, setShowWaitModal] = useState(false);
     const [showDeliveredModal, setShowDeliveredModal] = useState(false);
 
-    const handleSelect = async (reason: any) => {
+    const handleSelect = async (reasonKey: string) => {
         setShowWaitModal(true);
 
         setTimeout(() => {
@@ -24,17 +26,17 @@ const LiveOrderHelp = ({ navigation, route }: any) => {
     return (
         <KeyboardAvoidWrapper>
             <View style={GlobalStyles.container}>
-                <Header title={''} />
+                <Header title={t('liveOrderHelp')} />
                 <View style={styles.innerContainer}>
                     <View style={styles.titleContainer}>
                         <View style={styles.redLine} />
-                        <Text style={styles.titleText}>Live Order Help</Text>
+                        <Text style={styles.titleText}>{t('liveOrderHelp')}</Text>
                     </View>
                     <TouchableOpacity
                         style={styles.listItem}
-                        onPress={() => handleSelect('Customer not reachable / answering')}
+                        onPress={() => handleSelect('customerNotReachable')}
                     >
-                        <Text style={styles.listText}>Customer not reachable / answering</Text>
+                        <Text style={styles.listText}>{t('customerNotReachable')}</Text>
                         <Icon name="chevron-forward" size={20} color="#999" />
                     </TouchableOpacity>
 
@@ -42,43 +44,33 @@ const LiveOrderHelp = ({ navigation, route }: any) => {
 
                     <TouchableOpacity
                         style={styles.listItem}
-                        onPress={() => handleSelect('Customer address / location is wrong')}
+                        onPress={() => handleSelect('wrongAddress')}
                     >
-                        <Text style={styles.listText}>Customer address / location is wrong</Text>
+                        <Text style={styles.listText}>{t('wrongAddress')}</Text>
                         <Icon name="chevron-forward" size={20} color="#999" />
                     </TouchableOpacity>
 
                     <View style={styles.divider} />
                 </View>
+                
                 <Modal visible={showWaitModal} transparent animationType="slide">
                     <TouchableOpacity activeOpacity={1} style={styles.waitOverlay}>
                         <View style={styles.waitCard}>
                             <Icon name="time-outline" size={45} color={Colors.dark_green} />
-
                             <ActivityIndicator size="large" color={Colors.dark_green} />
-
-                            <Text style={styles.waitTitle}>Please wait...</Text>
-
-                            <Text style={styles.waitSubtitle}>
-                                Our admin will reach you soon regarding your request.
-                            </Text>
+                            <Text style={styles.waitTitle}>{t('pleaseWait')}</Text>
+                            <Text style={styles.waitSubtitle}>{t('adminWillReachSoon')}</Text>
                         </View>
                     </TouchableOpacity>
                 </Modal>
+
                 <Modal visible={showDeliveredModal} transparent animationType="fade">
                     <View style={styles.deliveredOverlay}>
                         <View style={styles.deliveredCard}>
-
-                            <Icon
-                                name="checkmark-circle-outline"
-                                size={60}
-                                color={Colors.dark_green}
-                            />
-
-                            <Text style={styles.deliveredTitle}>Arrival Confirmed</Text>
-
-                            <Text style={[styles.deliveredSubtitle, { textAlign: "center" }]}>
-                              You’ve reached the customer’s drop location.
+                            <Icon name="checkmark-circle-outline" size={60} color={Colors.dark_green} />
+                            <Text style={styles.deliveredTitle}>{t('arrivalConfirmed')}</Text>
+                            <Text style={[styles.deliveredSubtitle, { textAlign: 'center' }]}>
+                                {t('reachedDropLocation')}
                             </Text>
 
                             <TouchableOpacity
@@ -88,7 +80,7 @@ const LiveOrderHelp = ({ navigation, route }: any) => {
                                     navigation.navigate('DropOrder', { tripData });
                                 }}
                             >
-                                <Text style={styles.okButtonText}>Go to Drop Details</Text>
+                                <Text style={styles.okButtonText}>{t('goToDropDetails')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

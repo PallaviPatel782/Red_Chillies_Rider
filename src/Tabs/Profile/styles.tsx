@@ -13,7 +13,7 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         padding: SW(10),
         borderRadius: SW(10),
-        marginTop: SH(10),
+        marginTop: SH(1),
         elevation: 3,
     },
     profileImage: {
@@ -65,7 +65,7 @@ export default StyleSheet.create({
     sectionContainer: {
         backgroundColor: '#fff',
         borderRadius: SW(8),
-        marginTop: SH(15),
+        marginTop: SH(10),
         elevation: 2,
     },
     sectionTitle: {
@@ -73,7 +73,7 @@ export default StyleSheet.create({
         fontFamily: "Ubuntu-Bold",
         color: '#666',
         paddingHorizontal: SW(10),
-        paddingVertical: SH(8),
+        paddingVertical: SH(5),
     },
     listItem: {
         flexDirection: 'row',

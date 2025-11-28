@@ -17,8 +17,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch } from 'react-redux';
 import { setStatus } from '../../../redux/slices/statusShiftStore';
+import { useTranslation } from 'react-i18next';
 
 const HelpCenterDenyOrder = ({ route, navigation }: any) => {
+  const { t } = useTranslation();
   const { selectedReason } = route.params || {};
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
@@ -40,21 +42,20 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
   const handleDenyOrder = () => {
     setModalVisible(false);
     dispatch(setStatus('Offline'));
-    navigation.navigate('MainTabs')
+    navigation.navigate('MainTabs');
   };
 
   return (
     <KeyboardAvoidWrapper>
       <View style={[GlobalStyles.container]}>
-        <Header title="Help Center" />
+        <Header title={t('helpCenter')} />
         <Text style={styles.reasonTitle}>
-          {selectedReason ?? 'No reason selected'}
+          {t(selectedReason) ?? t('noReasonSelected')}
         </Text>
 
         <View style={styles.warningBox}>
           <Text style={styles.warningText}>
-            You did <Text style={{ fontFamily: 'Ubuntu-Bold' }}>2 denials</Text> in the last{' '}
-            <Text style={{ fontFamily: 'Ubuntu-Bold' }}>20 orders!</Text>
+            {t('denialWarning', { count: 2, orders: 20 })}
           </Text>
         </View>
 
@@ -64,13 +65,14 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
           <TouchableOpacity
             style={styles.denyBtnOutline}
             onPress={() => setModalVisible(true)}>
-            <Text style={styles.denyText}>Deny order</Text>
+            <Text style={styles.denyText}>{t('denyOrder')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.dontDenyBtn}>
-            <Text style={styles.dontDenyText}>Don't Deny</Text>
+            <Text style={styles.dontDenyText}>{t('dontDeny')}</Text>
           </TouchableOpacity>
         </View>
+
         <Modal
           animationType="slide"
           transparent
@@ -82,7 +84,7 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
           />
           <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Are you sure?</Text>
+              <Text style={styles.modalTitle}>{t('areYouSure')}</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
                 <Ionicons name="close" size={22} color={Colors.black} />
               </TouchableOpacity>
@@ -97,19 +99,17 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
                   style={{ marginRight: 5 }}
                 />
                 <Text style={styles.modalCardText}>
-                  <Text style={styles.modalLabel}>Order Id: </Text>1234
+                  <Text style={styles.modalLabel}>{t('orderId')}: </Text>1234
                 </Text>
               </View>
               <Text style={[styles.modalCardText, { marginTop: SH(6) }]}>
-                <Text style={styles.modalLabel}>Reason: </Text>
-                {selectedReason?.split(': ')[1] ?? 'Not provided'}
+                <Text style={styles.modalLabel}>{t('reason')}: </Text>
+                {selectedReason?.split(': ')[1] ?? t('notProvided')}
               </Text>
             </View>
 
             <View style={styles.infoBox}>
-              <Text style={styles.infoText1}>
-                If you cancel the ride, you won’t be able to get another one for 30 minutes.
-              </Text>
+              <Text style={styles.infoText1}>{t('cancelRideInfo')}</Text>
             </View>
 
             <View style={styles.Box}>
@@ -120,13 +120,8 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
                   color={Colors.red}
                 />
                 <View style={{ flex: 1, marginLeft: 8 }}>
-                  <Text style={styles.infoText}>
-                    You will be taken offline for denial
-                  </Text>
-                  <Text style={styles.subText}>
-                    Please come back online when you are ready to start delivering
-                    orders
-                  </Text>
+                  <Text style={styles.infoText}>{t('offlineForDenial')}</Text>
+                  <Text style={styles.subText}>{t('comeBackOnline')}</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={20} color={'#777'} />
               </View>
@@ -136,13 +131,13 @@ const HelpCenterDenyOrder = ({ route, navigation }: any) => {
               <TouchableOpacity
                 style={styles.modalDenyBtn}
                 onPress={handleDenyOrder}>
-                <Text style={styles.modalDenyText}>Deny order</Text>
+                <Text style={styles.modalDenyText}>{t('denyOrder')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.modalDontDenyBtn}
                 onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalDontDenyText}>Don’t Deny</Text>
+                <Text style={styles.modalDontDenyText}>{t('dontDeny')}</Text>
               </TouchableOpacity>
             </View>
           </View>

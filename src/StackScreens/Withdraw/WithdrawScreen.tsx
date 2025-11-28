@@ -5,11 +5,14 @@ import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import styles from './styles';
 import Colors from '../../utils/Colors/Colors';
+import { useTranslation } from 'react-i18next';
 
 const WithdrawScreen = ({ navigation }: any) => {
   const [amount, setAmount] = useState('');
+  const { t } = useTranslation();
+
   const withdrawableAmount = 1816.55;
-  const currencySymbol = "SAR"; 
+  const currencySymbol = "SAR";
 
   const handleWithdraw = () => {
     if (!amount || parseFloat(amount) <= 0) return;
@@ -22,21 +25,30 @@ const WithdrawScreen = ({ navigation }: any) => {
     <KeyboardAvoidWrapper
       bottomComponent={
         <View style={styles.noteBox}>
-          <Text style={styles.noteItem}>• Maximum withdrawal limit is 2000 {currencySymbol}</Text>
-          <Text style={styles.noteItem}>• You can withdraw only 1 time in a day</Text>
+          <Text style={styles.noteItem}>
+            • {t("maxWithdrawLimit")} 2000 {currencySymbol}
+          </Text>
+
+          <Text style={styles.noteItem}>
+            • {t("oneWithdrawDay")}
+          </Text>
         </View>
       }
     >
       <View style={[GlobalStyles.container, { paddingHorizontal: 16 }]}>
-        <Header title="Add to bank account" />
+
+        <Header title={t("addToBankAccount")} />
+
         <View style={styles.withdrawCard}>
-          <Text style={styles.withdrawTitle}>Withdrawable amount</Text>
+          <Text style={styles.withdrawTitle}>{t("withdrawableAmount")}</Text>
           <Text style={styles.withdrawValue}>
             {displayAmount.toFixed(2)} {currencySymbol}
           </Text>
         </View>
+
         <View style={styles.amountSection}>
-          <Text style={styles.amountLabel}>Enter amount</Text>
+          <Text style={styles.amountLabel}>{t("enterAmount")}</Text>
+
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.amountInput}
@@ -45,9 +57,10 @@ const WithdrawScreen = ({ navigation }: any) => {
               value={amount}
               onChangeText={setAmount}
             />
-              <Text style={styles.rupeeSymbol}>{currencySymbol}</Text>
+            <Text style={styles.rupeeSymbol}>{currencySymbol}</Text>
           </View>
         </View>
+
         <TouchableOpacity
           style={[
             styles.withdrawButton,
@@ -56,8 +69,9 @@ const WithdrawScreen = ({ navigation }: any) => {
           onPress={handleWithdraw}
           disabled={!amount}
         >
-          <Text style={styles.withdrawText}>Withdraw</Text>
+          <Text style={styles.withdrawText}>{t("withdraw")}</Text>
         </TouchableOpacity>
+
       </View>
     </KeyboardAvoidWrapper>
   );

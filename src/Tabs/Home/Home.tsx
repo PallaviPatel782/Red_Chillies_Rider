@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, Text, TouchableOpacity, Modal, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, ToastAndroid } from 'react-native';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import StatusShiftModal from '../../Components/StatusShiftModal';
@@ -8,15 +8,19 @@ import Colors from '../../utils/Colors/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { deliveryData } from '../../DummyData/DummyData';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { SH, SF, SW } from '../../utils/Responsiveness/Dimensions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useIsFocused } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
+import { setStatus } from '../../redux/slices/statusShiftStore';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const modalRef = useRef<any>(null);
   const navigation = useNavigation<any>();
   const isFocused = useIsFocused();
@@ -24,6 +28,7 @@ const Home = () => {
   const [showOnlineModal, setShowOnlineModal] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState<any>(null);
   const [timer, setTimer] = useState(30);
+  const [dontShowAgain, setDontShowAgain] = useState(false);
   const [currentTripIndex, setCurrentTripIndex] = useState(0);
   const currencySymbol = 'SAR'
 
@@ -34,18 +39,17 @@ const Home = () => {
   );
 
   useEffect(() => {
-    if (status === 'Offline') {
+    if (status === 'Offline' && !dontShowAgain) {
       setShowOnlineModal(true);
     } else {
       setShowOnlineModal(false);
     }
-  }, [status, isFocused]);
+  }, [status, isFocused, dontShowAgain]);
 
   const handleGoOnline = () => {
     setShowOnlineModal(false);
-    setTimeout(() => {
-      modalRef.current?.open();
-    }, 300);
+    dispatch(setStatus("Online"));
+    ToastAndroid.show("You are now Online", ToastAndroid.SHORT);
   };
 
 
@@ -102,31 +106,21 @@ const Home = () => {
       <View style={[GlobalStyles.container]}>
         <StatusShiftModal ref={modalRef} />
 
+        <View style={styles.inProgressBadge}>
+          <Text style={styles.inProgressText}>
+            {status === 'Offline'
+              ? t('offlineStatus')
+              : status === 'On break'
+                ? t('onBreakStatus')
+                : t('onlineStatus')}
+          </Text>
+        </View>
 
-        {status === 'Offline' ? (
-          <View style={styles.inProgressBadge}>
-            <Text style={styles.inProgressText}>
-              You’re currently offline - switch online to start your next trip
-            </Text>
-          </View>
-        ) : status === 'On break' ? (
-          <View style={styles.inProgressBadge}>
-            <Text style={styles.inProgressText}>
-              You are currently on a break. Whenever you’re ready to continue your trips, please go online.
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.inProgressBadge}>
-            <Text style={styles.inProgressText}>
-              You are online. You’ll get your trip soon. Just wait
-            </Text>
-          </View>
-        )}
         <View style={styles.progressCard}>
           <View style={styles.cardHeader}>
             <View style={styles.cardHeaderRow}>
               <Ionicons name="checkmark-circle-outline" size={18} color="#2266D1" />
-              <Text style={styles.progressTitle}>Today's progress</Text>
+              <Text style={styles.progressTitle}>{t('todaysProgress')}</Text>
             </View>
           </View>
 
@@ -139,8 +133,8 @@ const Home = () => {
                 <View style={styles.iconCircle}>
                   <MaterialCommunityIcons name="wallet-outline" size={20} color="#2EAD64" />
                 </View>
-                <Text style={styles.amount}>210 SAR </Text>
-                <Text style={styles.itemLabel}>Earnings ▶</Text>
+                <Text style={styles.amount}>210 {currencySymbol}</Text>
+                <Text style={styles.itemLabel}>{t('earnings1')}</Text>
               </TouchableOpacity>
 
               <View style={[styles.progressItem, { backgroundColor: '#4D88FF' }]}>
@@ -148,12 +142,11 @@ const Home = () => {
                   <Ionicons name="time-outline" size={20} color="#4D88FF" />
                 </View>
                 <Text style={styles.amount}>3.00 hrs</Text>
-                <Text style={[styles.itemLabel, { paddingTop: SH(8) }]}>Login hours</Text>
+                <Text style={[styles.itemLabel, { paddingTop: SH(8) }]}>{t('loginHours')}</Text>
               </View>
             </View>
 
             <View style={styles.progressRow}>
-
               <TouchableOpacity
                 style={[styles.progressItem, { backgroundColor: '#00B1C5' }]}
                 onPress={() => navigation.navigate('PastTrips')}
@@ -162,7 +155,7 @@ const Home = () => {
                   <MaterialCommunityIcons name="history" size={20} color="#00B1C5" />
                 </View>
                 <Text style={styles.amount}>30</Text>
-                <Text style={[styles.itemLabel, { paddingTop: SH(8) }]}>Trip history ▶</Text>
+                <Text style={[styles.itemLabel, { paddingTop: SH(8) }]}>{t('tripHistory')}</Text>
               </TouchableOpacity>
 
               <View style={[styles.progressItem, { backgroundColor: '#B58AF9' }]}>
@@ -170,7 +163,7 @@ const Home = () => {
                   <MaterialCommunityIcons name="scooter" size={20} color="#B58AF9" />
                 </View>
                 <Text style={styles.amount}>10</Text>
-                <Text style={[styles.itemLabel, { paddingTop: SH(8) }]}>Today's trips</Text>
+                <Text style={[styles.itemLabel, { paddingTop: SH(8) }]}>{t('todaysTrips')}</Text>
               </View>
             </View>
           </View>
@@ -181,7 +174,7 @@ const Home = () => {
             <View style={styles.cardHeaderRow}>
               <MaterialCommunityIcons name="scooter" size={18} color="#000" style={styles.cardIcon} />
               <Text style={[styles.progressTitle, { color: Colors.black }]}>
-                In Progress Trip
+                {t('inProgressTrip')}
               </Text>
             </View>
           </View>
@@ -197,7 +190,9 @@ const Home = () => {
             }}
           >
             <Ionicons name="document-text-outline" size={SF(14)} color={Colors.white} />
-            <Text style={styles.orderIdText}> Order Id: 1234</Text>
+            <Text style={styles.orderIdText}>
+              {t('orderId')}: 1234
+            </Text>
           </View>
 
           <TouchableOpacity style={[styles.pickupButton, { marginVertical: SH(5) }]}>
@@ -227,7 +222,7 @@ const Home = () => {
       </View>
 
       <Modal
-        visible={!!selectedTrip}
+        visible={!!selectedTrip && isFocused}
         transparent
         animationType="slide"
         onRequestClose={() => setSelectedTrip(null)}
@@ -247,7 +242,7 @@ const Home = () => {
               <Text style={styles.timerText}>{timer}s</Text>
             </View>
 
-            <Text style={styles.earningLabel}>Expected earnings</Text>
+            <Text style={styles.earningLabel}>{t('expectedEarnings')}</Text>
             <Text style={styles.earningValue}>
               {selectedTrip?.expectedEarnings?.toFixed(1)} {currencySymbol}
             </Text>
@@ -289,7 +284,7 @@ const Home = () => {
                 }}
                 height={SH(45)}
                 width={SW(350)}
-                title="ACCEPT ORDER"
+                title={t('acceptOrder')}
                 titleStyles={{
                   color: '#fff',
                   fontSize: SF(14),
@@ -350,21 +345,38 @@ const Home = () => {
             <View style={styles.onlineModalContent}>
               <Ionicons name="alert-circle-outline" size={40} color={Colors.red} />
 
-              <Text style={styles.offlineTitle}>You are Offline</Text>
+              <Text style={styles.offlineTitle}>{t('youAreOffline')}</Text>
 
-              <Text style={styles.offlineSubtitle}>
-                Please go online to start receiving trips.
-              </Text>
+              <Text style={styles.offlineSubtitle}>{t('goOnlineMessage')}</Text>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+                <TouchableOpacity
+                  onPress={() => setDontShowAgain(!dontShowAgain)}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderWidth: 2,
+                    borderColor: Colors.dark_green,
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  {dontShowAgain ? (
+                    <Ionicons name="checkmark" size={14} color={Colors.dark_green} />
+                  ) : null}
+                </TouchableOpacity>
+
+                <Text style={styles.offlineSubtitle}>{t('dontShowAgain')}</Text>
+              </View>
 
               <TouchableOpacity onPress={handleGoOnline} style={styles.goOnlineBtn}>
-                <Text style={styles.goOnlineText}>GO ONLINE</Text>
+                <Text style={styles.goOnlineText}>{t('goOnline')}</Text>
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
-
-
     </KeyboardAvoidWrapper>
   );
 };

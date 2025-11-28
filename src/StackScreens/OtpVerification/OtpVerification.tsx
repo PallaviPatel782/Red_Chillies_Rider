@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, I18nManager } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Routing/RootNavigator';
@@ -11,12 +11,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../utils/Colors/Colors';
 import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
+import { useTranslation } from 'react-i18next';
 
 const OtpVerification: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { t } = useTranslation();
+
   const [otp, setOtp] = useState(['', '', '', '']);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [timer, setTimer] = useState(45);
+
   const refs = useRef<(TextInput | null)[]>([]);
 
   useEffect(() => {
@@ -26,7 +30,7 @@ const OtpVerification: React.FC = () => {
   }, [timer]);
 
   const handleChange = (index: number, value: string) => {
-    if (/^\d$/.test(value) || value === '') {
+    if (/^[0-9]$/.test(value) || value === '') {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
@@ -48,15 +52,15 @@ const OtpVerification: React.FC = () => {
 
   return (
     <KeyboardAvoidWrapper
-      bottomComponent={
-        <CustomButton title="Continue" onPress={handleSubmit} />
-      }
+      bottomComponent={<CustomButton title={t("continue")} onPress={handleSubmit} />}
     >
       <View style={GlobalStyles.container}>
         <Header title="" />
+
         <View style={styles.content}>
+
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.title}>Verification Code</Text>
+            <Text style={styles.title}>{t("otpTitle")}</Text>
             <FontAwesome
               name="check-circle"
               color={Colors.green}
@@ -65,9 +69,7 @@ const OtpVerification: React.FC = () => {
             />
           </View>
 
-          <Text style={styles.subtitle}>
-            We have sent the verification code to your mobile number.
-          </Text>
+          <Text style={styles.subtitle}>{t("otpSubtitle")}</Text>
 
           <View style={styles.otpContainer}>
             {otp.map((value, index) => (
@@ -75,12 +77,18 @@ const OtpVerification: React.FC = () => {
                 key={index}
                 ref={(el) => { refs.current[index] = el; }}
                 value={value}
-                onChangeText={(text) => handleChange(index, text)}
                 keyboardType="number-pad"
                 maxLength={1}
+
+                onChangeText={(text) => handleChange(index, text)}
                 style={[
                   styles.otpBox,
-                  { borderColor: activeIndex === index ? Colors.green : styles.otpBox.borderColor },
+                  {
+                    borderColor:
+                      activeIndex === index
+                        ? Colors.green
+                        : styles.otpBox.borderColor,
+                  },
                 ]}
                 textAlign="center"
                 onFocus={() => setActiveIndex(index)}
@@ -89,8 +97,15 @@ const OtpVerification: React.FC = () => {
             ))}
           </View>
 
-          <Text style={{ color: Colors.gray, marginTop: SH(20), fontSize: SF(13) }}>
-            Didn’t get the OTP? Resend SMS in 0:{timer < 10 ? `0${timer}` : timer}
+          <Text
+            style={{
+              color: Colors.gray,
+              marginTop: SH(20),
+              fontSize: SF(13),
+              textAlign: I18nManager.isRTL ? "right" : "left",
+            }}
+          >
+            {t("otpTimer")} 0:{timer < 10 ? `0${timer}` : timer}
           </Text>
         </View>
       </View>

@@ -5,95 +5,117 @@ import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import CustomButton from '../../Components/CustomButton';
 import Colors from '../../utils/Colors/Colors';
-import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
+import { SF, SH } from '../../utils/Responsiveness/Dimensions';
 import { showMessage } from 'react-native-flash-message';
 import { Dropdown } from 'react-native-element-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useTranslation } from 'react-i18next';
 
 const ReportIssue = () => {
-    const [selectedOption, setSelectedOption] = useState(null);
+    const { t } = useTranslation();
+
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [name, setName] = useState('');
     const [mobile, setMobile] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
 
     const data = [
-        { label: 'Report an Issue', value: 'Report an Issue' },
-        { label: 'Report an Incident', value: 'Report an Incident' },
-    ];
+    { label: t('reportIssueOption1'), value: t('reportIssueOption1') },
+    { label: t('reportIssueOption2'), value: t('reportIssueOption2') },
+];
+
 
     const handleSubmit = () => {
         if (!selectedOption || !name || !mobile || !message) {
             showMessage({
-                message: 'Please fill all required fields (*)',
+                message: t('fillAllRequiredFields'),
                 type: 'warning',
             });
             return;
         }
 
         showMessage({
-            message: 'Issue submitted successfully!',
+            message: t('issueSubmittedSuccessfully'),
             type: 'success',
         });
+
+        // Reset form
+        setSelectedOption(null);
+        setName('');
+        setMobile('');
+        setEmail('');
+        setMessage('');
     };
 
     return (
-        <KeyboardAvoidWrapper
-            bottomComponent={<CustomButton title="Submit" onPress={handleSubmit} />}
-        >
+        <KeyboardAvoidWrapper bottomComponent={<CustomButton title={t('submit')} onPress={handleSubmit} />}>
             <View style={GlobalStyles.container}>
-                <Header title={'Report an Issue'} />
+                <Header title={t('reportIssue')} />
+
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>How can we help you <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        {t('howCanWeHelp')} <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <Dropdown
                         style={GlobalStyles.textInput}
                         data={data}
                         labelField="label"
                         valueField="value"
-                        placeholder="Select an option"
+                        placeholder={t('selectOption')}
                         selectedTextStyle={styles.selectedTextStyle}
                         placeholderStyle={styles.placeholderStyle}
                         value={selectedOption}
                         onChange={item => setSelectedOption(item.value)}
                     />
                 </View>
+
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>Name <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        {t('name')} <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TextInput
                         style={GlobalStyles.textInput}
-                        placeholder="Enter your name"
+                        placeholder={t('enterName')}
                         value={name}
                         onChangeText={setName}
                         placeholderTextColor={Colors.gray}
                     />
                 </View>
+
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>Mobile <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        {t('mobile')} <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TextInput
                         style={GlobalStyles.textInput}
-                        placeholder="Enter your mobile number"
+                        placeholder={t('enterMobile')}
                         keyboardType="phone-pad"
                         value={mobile}
                         onChangeText={setMobile}
                         placeholderTextColor={Colors.gray}
                     />
                 </View>
+
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>Email</Text>
+                    <Text style={GlobalStyles.inputLabel}>{t('email')}</Text>
                     <TextInput
                         style={GlobalStyles.textInput}
-                        placeholder="Enter your email (optional)"
+                        placeholder={t('enterEmailOptional')}
                         keyboardType="email-address"
                         value={email}
                         onChangeText={setEmail}
                         placeholderTextColor={Colors.gray}
                     />
                 </View>
+
                 <View style={GlobalStyles.textInputContainer}>
-                    <Text style={GlobalStyles.inputLabel}>Message <FontAwesome name="asterisk" color="red" size={8} /></Text>
+                    <Text style={GlobalStyles.inputLabel}>
+                        {t('message')} <FontAwesome name="asterisk" color="red" size={8} />
+                    </Text>
                     <TextInput
                         style={[GlobalStyles.textInput, { height: SH(100), textAlignVertical: 'top' }]}
-                        placeholder="Write your message here..."
+                        placeholder={t('writeMessage')}
                         value={message}
                         onChangeText={setMessage}
                         placeholderTextColor={Colors.gray}
@@ -113,7 +135,6 @@ const styles = StyleSheet.create({
         color: Colors.black,
         fontFamily: 'Ubuntu-Regular',
     },
-
     placeholderStyle: {
         fontSize: SF(14),
         color: Colors.gray,

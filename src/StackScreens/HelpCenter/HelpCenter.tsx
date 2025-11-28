@@ -5,59 +5,63 @@ import Header from '../../Components/Header';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import styles from './styles';
+import { useTranslation } from 'react-i18next';
 
 const HelpCenter = ({ navigation }: any) => {
-    return (
-        <KeyboardAvoidWrapper>
-            <View style={GlobalStyles.container}>
-                <Header title={''} />
+  const { t } = useTranslation();
 
-                <View style={styles.innerContainer}>
-                    <View style={styles.titleContainer}>
-                        <View style={styles.redLine} />
-                        <Text style={styles.titleText}>How can we help</Text>
-                    </View>
-                    <TouchableOpacity
-                        style={styles.listItem}
-                        onPress={() => navigation.navigate('CannotDeliverHelpCenter')}
-                    >
-                        <Text style={styles.listText}>Cannot Deliver</Text>
-                        <Icon name="chevron-forward" size={20} color="#999" />
-                    </TouchableOpacity>
+  return (
+    <KeyboardAvoidWrapper>
+      <View style={GlobalStyles.container}>
+        <Header title={''} />
 
-                    <View style={styles.divider} />
+        <View style={styles.innerContainer}>
+          <View style={styles.titleContainer}>
+            <View style={styles.redLine} />
+            <Text style={styles.titleText}>{t('howCanWeHelp')}</Text>
+          </View>
 
-                    <TouchableOpacity
-                        style={styles.listItem}
-                        onPress={() =>
-                            navigation.navigate('HelpCenterDenyOrder', {
-                                selectedReason: 'Cannot Deliver : Restaurant is closed',
-                            })
-                        }
-                    >
-                        <Text style={styles.listText}>Restaurant is closed</Text>
-                        <Icon name="chevron-forward" size={20} color="#999" />
-                    </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.listItem}
+            onPress={() => navigation.navigate('CannotDeliverHelpCenter')}
+          >
+            <Text style={styles.listText}>{t('cannotDeliver')}</Text>
+            <Icon name="chevron-forward" size={20} color="#999" />
+          </TouchableOpacity>
 
-                    <View style={styles.divider} />
+          <View style={styles.divider} />
 
-                    <TouchableOpacity
-                        style={styles.listItem}
-                        onPress={() =>
-                            navigation.navigate('HelpCenterDenyOrder', {
-                                selectedReason: 'Cannot Deliver : Can’t find restaurant',
-                            })
-                        }
-                    >
-                        <Text style={styles.listText}>Can’t find restaurant</Text>
-                        <Icon name="chevron-forward" size={20} color="#999" />
-                    </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.listItem}
+            onPress={() =>
+              navigation.navigate('HelpCenterDenyOrder', {
+                selectedReason: t('restaurantClosedFull'), // dynamic reason
+              })
+            }
+          >
+            <Text style={styles.listText}>{t('restaurantClosed')}</Text>
+            <Icon name="chevron-forward" size={20} color="#999" />
+          </TouchableOpacity>
 
-                    <View style={styles.divider} />
-                </View>
-            </View>
-        </KeyboardAvoidWrapper>
-    );
+          <View style={styles.divider} />
+
+          <TouchableOpacity
+            style={styles.listItem}
+            onPress={() =>
+              navigation.navigate('HelpCenterDenyOrder', {
+                selectedReason: t('cantFindRestaurantFull'),
+              })
+            }
+          >
+            <Text style={styles.listText}>{t('cantFindRestaurant')}</Text>
+            <Icon name="chevron-forward" size={20} color="#999" />
+          </TouchableOpacity>
+
+          <View style={styles.divider} />
+        </View>
+      </View>
+    </KeyboardAvoidWrapper>
+  );
 };
 
 export default HelpCenter;

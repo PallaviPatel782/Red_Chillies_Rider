@@ -12,6 +12,7 @@ import Colors from '../../utils/Colors/Colors';
 import { showMessage } from 'react-native-flash-message';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from './styles';
+import { useTranslation } from 'react-i18next';
 
 interface Document {
     name: string;
@@ -23,6 +24,7 @@ interface Document {
 const RiderData = () => {
     const navigation = useNavigation<any>();
     const route = useRoute<any>();
+    const { t } = useTranslation();
 
     const [fullName, setFullName] = useState('');
     const [workCity, setWorkCity] = useState('');
@@ -41,10 +43,11 @@ const RiderData = () => {
     }, [route.params]);
 
     const vehicleOptions = [
-        { label: 'Motorcycle/Scooty', value: 'motorcycle' },
-        { label: 'Electric Vehicle (EV)', value: 'ev' },
-        { label: "I don’t have a vehicle", value: 'none' },
+        { label: t("motorcycle") || "Motorcycle", value: "motorcycle" },
+        { label: t("ev") || "EV", value: "ev" },
+        { label: t("noVehicle") || "No Vehicle", value: "none" },
     ];
+
 
     const pickDocumentFile = async (setter: React.Dispatch<React.SetStateAction<Document | null>>) => {
         try {
@@ -53,7 +56,7 @@ const RiderData = () => {
 
             setter({
                 uri: res.uri,
-                name: res.name ?? 'Unnamed Document',
+                name: res.name ?? t("uploadDocument"),
                 type: res.type || 'application/pdf',
                 size: res.size ?? undefined
             });
@@ -72,23 +75,20 @@ const RiderData = () => {
         <KeyboardAvoidWrapper
             bottomComponent={
                 <CustomButton
-                    title="Continue"
-                    onPress={() => {
-                        navigation.navigate('BankDetials');
-                    }}
+                    title={t("continue")}
+                    onPress={() => navigation.navigate('BankDetials')}
                 />
             }
         >
-
             <View style={GlobalStyles.container}>
-                <Header title="Rider Details" />
+                <Header title={t("riderDetails")} />
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        User Full Name <FontAwesome name="asterisk" color="red" size={8} />
+                        {t("fullName")} <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TextInput
                         style={GlobalStyles.textInput}
-                        placeholder="Enter your full name"
+                        placeholder={t("enterFullName")}
                         placeholderTextColor={Colors.gray}
                         value={fullName}
                         onChangeText={setFullName}
@@ -96,7 +96,7 @@ const RiderData = () => {
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        Please select your work city <FontAwesome name="asterisk" color="red" size={8} />
+                        {t("workCity")} <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TouchableOpacity
                         style={GlobalStyles.textInput}
@@ -106,12 +106,14 @@ const RiderData = () => {
                             })
                         }
                     >
-                        <Text style={{ color: Colors.gray }}>{workCity || 'Select City'}</Text>
+                        <Text style={{ color: Colors.gray }}>
+                            {workCity || t("workCity")}
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        Please select your work area <FontAwesome name="asterisk" color="red" size={8} />
+                        {t("workArea")} <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TouchableOpacity
                         style={GlobalStyles.textInput}
@@ -122,19 +124,21 @@ const RiderData = () => {
                             })
                         }
                     >
-                        <Text style={{ color: Colors.gray }}>{workArea || 'Select Area'}</Text>
+                        <Text style={{ color: Colors.gray }}>
+                            {workArea || t("workArea")}
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        Choose Vehicle <FontAwesome name="asterisk" color="red" size={8} />
+                        {t("chooseVehicle")} <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <Dropdown
                         style={GlobalStyles.textInput}
                         data={vehicleOptions}
                         labelField="label"
                         valueField="value"
-                        placeholder="Select Vehicle"
+                        placeholder={t("selectVehicle")}
                         selectedTextStyle={styles.selectedTextStyle}
                         placeholderStyle={styles.placeholderStyle}
                         value={vehicle}
@@ -143,51 +147,28 @@ const RiderData = () => {
                 </View>
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        ID / Address Proof <FontAwesome name="asterisk" color="red" size={8} />
+                        {t("idProof")} <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TouchableOpacity
-                        style={[
-                            GlobalStyles.textInput,
-                            {
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            },
-                        ]}
+                        style={[GlobalStyles.textInput, { flexDirection: 'row', justifyContent: 'space-between' }]}
                         onPress={() => pickDocumentFile(setIdDocument)}
                     >
-                        <Text
-                            style={{ color: Colors.gray, flex: 1, marginRight: SW(10) }}
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
-                        >
-                            {idDocument?.name ?? 'Upload Document'}
+                        <Text numberOfLines={1} ellipsizeMode="tail" style={{ color: Colors.gray, flex: 1 }}>
+                            {idDocument?.name || t("uploadDocument")}
                         </Text>
                         <FontAwesome name="camera" size={20} color={Colors.gray} />
                     </TouchableOpacity>
                 </View>
-
                 <View style={GlobalStyles.textInputContainer}>
                     <Text style={GlobalStyles.inputLabel}>
-                        Driving License <FontAwesome name="asterisk" color="red" size={8} />
+                        {t("drivingLicense")} <FontAwesome name="asterisk" color="red" size={8} />
                     </Text>
                     <TouchableOpacity
-                        style={[
-                            GlobalStyles.textInput,
-                            {
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            },
-                        ]}
+                        style={[GlobalStyles.textInput, { flexDirection: 'row', justifyContent: 'space-between' }]}
                         onPress={() => pickDocumentFile(setDrivingLicense)}
                     >
-                        <Text
-                            style={{ color: Colors.gray, flex: 1, marginRight: SW(10) }}
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
-                        >
-                            {drivingLicense?.name ?? 'Upload Document'}
+                        <Text numberOfLines={1} ellipsizeMode="tail" style={{ color: Colors.gray, flex: 1 }}>
+                            {drivingLicense?.name || t("uploadDocument")}
                         </Text>
                         <FontAwesome name="camera" size={20} color={Colors.gray} />
                     </TouchableOpacity>

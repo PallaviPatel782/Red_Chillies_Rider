@@ -4,24 +4,26 @@ import Header from '../../Components/Header';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 import CustomButton from '../../Components/CustomButton';
-import { SF, SH, SW } from '../../utils/Responsiveness/Dimensions';
-import Colors from '../../utils/Colors/Colors';
 import { showMessage } from 'react-native-flash-message';
+import Colors from '../../utils/Colors/Colors';
+import { useTranslation } from 'react-i18next';
+import { SH, SW, SF } from '../../utils/Responsiveness/Dimensions';
 
 const SendFeedBack = () => {
+    const { t } = useTranslation();
     const [feedback, setFeedback] = useState('');
 
     const handleSubmit = () => {
         if (!feedback.trim()) {
             showMessage({
-                message: 'Please enter your feedback before submitting.',
+                message: t('feedbackEmpty'),
                 type: 'warning',
                 color: Colors.white,
             });
             return;
         }
         showMessage({
-            message: 'Feedback submitted successfully!',
+            message: t('feedbackSubmitted'),
             type: 'success',
             backgroundColor: Colors.green,
             color: Colors.white,
@@ -32,20 +34,18 @@ const SendFeedBack = () => {
     return (
         <KeyboardAvoidWrapper
             bottomComponent={
-                <CustomButton title="Submit feedback" onPress={handleSubmit} />
+                <CustomButton title={t('submitFeedback')} onPress={handleSubmit} />
             }
         >
             <View style={GlobalStyles.container}>
-                <Header title={'Send Feedback'} />
+                <Header title={t('sendFeedback')} />
 
                 <View style={styles.innerContainer}>
-                    <Text style={styles.infoText}>
-                        Tell us what you love about the app, or what we could be doing better.
-                    </Text>
+                    <Text style={styles.infoText}>{t('feedbackInfo')}</Text>
 
                     <TextInput
                         style={styles.inputBox}
-                        placeholder="Write your feedback here..."
+                        placeholder={t('feedbackPlaceholder')}
                         placeholderTextColor={Colors.gray}
                         multiline
                         numberOfLines={6}

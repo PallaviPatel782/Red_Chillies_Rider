@@ -39,6 +39,7 @@ import PastTrips from '../StackScreens/PastTrips/PastTrips';
 import ChatScreen from '../StackScreens/ChatScreen/ChatScreen';
 import TripHistory from '../StackScreens/TripHistory/TripHistory';
 import LiveOrderHelp from '../StackScreens/HelpCenter/LiveOrderHelp/LiveOrderHelp';
+import Settings from '../StackScreens/Settings/Settings';
 
 export type RootStackParamList = {
     Splash: undefined;
@@ -71,6 +72,7 @@ export type RootStackParamList = {
     CashOnDelivery: { tripData: any };
     TripHistory: undefined;
     DeliveryComplete: { tripData: any };
+    Settings: undefined;
 };
 
 export type RootTabParamList = {
@@ -150,8 +152,8 @@ const RootNavigator: React.FC = () => {
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{ headerShown: false }}
-                initialRouteName="Loading"
-                // initialRouteName="MainTabs"
+                // initialRouteName="Loading"
+            initialRouteName="MainTabs"
             >
                 <Stack.Screen name="Loading" component={Loading} />
                 <Stack.Screen name="Splash" component={SplashScreen} />
@@ -181,6 +183,7 @@ const RootNavigator: React.FC = () => {
                 <Stack.Screen name="TripHistory" component={TripHistory} />
                 <Stack.Screen name="ChatScreen" component={ChatScreen} />
                 <Stack.Screen name="LiveOrderHelp" component={LiveOrderHelp} />
+                <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="YourProfile" component={YourProfile} />
                 <Stack.Screen name="MainTabs" component={MainTabs} />
             </Stack.Navigator>

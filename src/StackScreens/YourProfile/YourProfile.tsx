@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    Image,
-    TouchableOpacity,
-    ScrollView, Modal
-} from 'react-native';
+import {View, Text, TextInput, Image, TouchableOpacity, ScrollView, Modal} from 'react-native';
 import ImagePicker, { Image as PickerImage } from 'react-native-image-crop-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import GlobalStyles from '../../utils/GlobalStyles/GlobalStyles';
 import Header from '../../Components/Header';
 import KeyboardAvoidWrapper from '../../Components/KeyboardAvoidWrapper';
 
-// Dummy Image
 const dummyProfile = require('../../assests/Images/ProfilePic.png');
 
 type RootStackParamList = {
@@ -34,6 +27,7 @@ interface UploadedImage {
 
 const YourProfile: React.FC = () => {
     const navigation = useNavigation<NavigationProp>();
+    const { t } = useTranslation();
 
     const [name, setName] = useState('Samruddhi Bansod');
     const [mobile, setMobile] = useState('+966-512345678');
@@ -47,9 +41,9 @@ const YourProfile: React.FC = () => {
     const [targetSetter, setTargetSetter] = useState<React.Dispatch<React.SetStateAction<UploadedImage | null>> | null>(null);
 
     const vehicleOptions = [
-        { label: 'Motorcycle/Scooty', value: 'Motorcycle/Scooty' },
-        { label: 'Car', value: 'Car' },
-        { label: 'Bicycle', value: 'Bicycle' },
+        { label: t("motorcycle"), value: 'Motorcycle/Scooty' },
+        { label: t("car"), value: 'Car' },
+        { label: t("bicycle"), value: 'Bicycle' },
     ];
 
     const openImageModal = (setter: React.Dispatch<React.SetStateAction<UploadedImage | null>>) => {
@@ -103,7 +97,8 @@ const YourProfile: React.FC = () => {
     return (
         <KeyboardAvoidWrapper>
             <ScrollView contentContainerStyle={GlobalStyles.container}>
-                <Header title={'Your Profile'} />
+                <Header title={t("yourProfile")} />
+
                 <View style={styles.profileWrap}>
                     <Image
                         source={profileImage ? { uri: profileImage.uri } : dummyProfile}
@@ -116,36 +111,39 @@ const YourProfile: React.FC = () => {
                         <MaterialCommunityIcons name="camera" size={22} color="#e85a6e" />
                     </TouchableOpacity>
                 </View>
+
                 <View>
+                
                     <View style={GlobalStyles.textInputContainer}>
                         <Text style={GlobalStyles.inputLabel}>
-                            Name <FontAwesome name="asterisk" color="red" size={8} />
+                            {t("name")} <FontAwesome name="asterisk" color="red" size={8} />
                         </Text>
                         <TextInput
                             style={GlobalStyles.textInput}
                             value={name}
                             onChangeText={setName}
-                            placeholder="Enter Name"
+                            placeholder={t("enterName")}
                         />
-
                     </View>
+
                     <View style={GlobalStyles.textInputContainer}>
                         <Text style={GlobalStyles.inputLabel}>
-                            Mobile <FontAwesome name="asterisk" color="red" size={8} />
+                            {t("mobile")} <FontAwesome name="asterisk" color="red" size={8} />
                         </Text>
                         <TextInput
                             style={GlobalStyles.textInput}
                             value={mobile}
                             onChangeText={setMobile}
                             keyboardType="phone-pad"
-                            placeholder="Enter Mobile Number"
+                            placeholder={t("enterMobile")}
                         />
                     </View>
 
                     <View style={GlobalStyles.textInputContainer}>
                         <Text style={GlobalStyles.inputLabel}>
-                            Please select your work city <FontAwesome name="asterisk" color="red" size={8} />
+                            {t("selectWorkCity")} <FontAwesome name="asterisk" color="red" size={8} />
                         </Text>
+
                         <TouchableOpacity
                             style={GlobalStyles.textInput}
                             onPress={() =>
@@ -155,14 +153,14 @@ const YourProfile: React.FC = () => {
                             }
                         >
                             <Text style={{ color: workCity ? '#000' : '#888' }}>
-                                {workCity || 'Select City'}
+                                {workCity || t("selectCity")}
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={GlobalStyles.textInputContainer}>
                         <Text style={GlobalStyles.inputLabel}>
-                            Please select your work area <FontAwesome name="asterisk" color="red" size={8} />
+                            {t("selectWorkArea")} <FontAwesome name="asterisk" color="red" size={8} />
                         </Text>
                         <TouchableOpacity
                             style={GlobalStyles.textInput}
@@ -174,25 +172,26 @@ const YourProfile: React.FC = () => {
                             }
                         >
                             <Text style={{ color: workArea ? '#000' : '#888' }}>
-                                {workArea || 'Select Area'}
+                                {workArea || t("selectArea")}
                             </Text>
                         </TouchableOpacity>
-
                     </View>
+
                     <View style={GlobalStyles.textInputContainer}>
-                        <Text style={GlobalStyles.inputLabel}>Choose Vehicle</Text>
+                        <Text style={GlobalStyles.inputLabel}>{t("chooseVehicle")}</Text>
                         <Dropdown
                             style={[GlobalStyles.textInput, { paddingHorizontal: 10 }]}
                             data={vehicleOptions}
                             labelField="label"
                             valueField="value"
-                            placeholder="Select Vehicle"
+                            placeholder={t("selectVehicle")}
                             value={vehicle}
                             onChange={(item) => setVehicle(item.value)}
                         />
                     </View>
+
                     <View style={GlobalStyles.textInputContainer}>
-                        <Text style={[GlobalStyles.inputLabel]}>ID / Address Proof</Text>
+                        <Text style={[GlobalStyles.inputLabel]}>{t("idProof")}</Text>
                         <View style={styles.docBox}>
                             {idImage ? (
                                 <>
@@ -204,13 +203,13 @@ const YourProfile: React.FC = () => {
                             ) : (
                                 <TouchableOpacity style={styles.uploadPlaceholder} onPress={() => openImageModal(setIdImage)}>
                                     <MaterialCommunityIcons name="camera-plus" size={32} color="#aaa" />
-                                    <Text style={styles.uploadText}>Upload</Text>
+                                    <Text style={styles.uploadText}>{t("upload")}</Text>
                                 </TouchableOpacity>
                             )}
                         </View>
                     </View>
                     <View style={GlobalStyles.textInputContainer}>
-                        <Text style={[GlobalStyles.inputLabel]}>Driving License</Text>
+                        <Text style={[GlobalStyles.inputLabel]}>{t("drivingLicense")}</Text>
                         <View style={styles.docBox}>
                             {dlImage ? (
                                 <>
@@ -222,7 +221,7 @@ const YourProfile: React.FC = () => {
                             ) : (
                                 <TouchableOpacity style={styles.uploadPlaceholder} onPress={() => openImageModal(setDlImage)}>
                                     <MaterialCommunityIcons name="camera-plus" size={32} color="#aaa" />
-                                    <Text style={styles.uploadText}>Upload</Text>
+                                    <Text style={styles.uploadText}>{t("upload")}</Text>
                                 </TouchableOpacity>
                             )}
                         </View>
@@ -230,7 +229,7 @@ const YourProfile: React.FC = () => {
                 </View>
 
                 <TouchableOpacity style={styles.updateBtn} onPress={onUpdate}>
-                    <Text style={styles.updateBtnText}>Update Profile</Text>
+                    <Text style={styles.updateBtnText}>{t("updateProfile")}</Text>
                 </TouchableOpacity>
 
                 <View style={{ height: 40 }} />
@@ -242,27 +241,30 @@ const YourProfile: React.FC = () => {
                 >
                     <View style={styles.modalOverlay}>
                         <View style={styles.modalBox}>
-                            <Text style={styles.modalTitle}>Upload Image</Text>
+                            <Text style={styles.modalTitle}>{t("uploadImage")}</Text>
 
                             <TouchableOpacity style={styles.modalBtn} onPress={pickFromCamera}>
                                 <MaterialCommunityIcons name="camera" size={20} color="#e85a6e" />
-                                <Text style={styles.modalBtnText}>Take Photo</Text>
+                                <Text style={styles.modalBtnText}>{t("takePhoto")}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.modalBtn} onPress={pickFromGallery}>
                                 <MaterialCommunityIcons name="image" size={20} color="#e85a6e" />
-                                <Text style={styles.modalBtnText}>Choose from Gallery</Text>
+                                <Text style={styles.modalBtnText}>{t("chooseFromGallery")}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
                                 style={[styles.modalBtn, { borderTopWidth: 1, borderColor: '#eee' }]}
                                 onPress={() => setVisibleModal(false)}
                             >
-                                <Text style={[styles.modalBtnText, { color: 'red' }]}>Cancel</Text>
+                                <Text style={[styles.modalBtnText, { color: 'red' }]}>
+                                    {t("cancel")}
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
+
             </ScrollView>
         </KeyboardAvoidWrapper>
     );
